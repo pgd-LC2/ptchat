@@ -1,10 +1,17 @@
+'use client';
+
 import WelcomeScreen from './WelcomeScreen';
 import { AssistantMessage, UserMessage } from './ChatMessage';
 import ChatInput from './ChatInput';
-import { Message } from 'ai';
+
+export type ChatMessage = {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+};
 
 type Props = {
-  messages: Message[];
+  messages: ChatMessage[];
   input: string;
   isLoading: boolean;
   onInputChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
