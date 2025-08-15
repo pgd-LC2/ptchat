@@ -15,7 +15,7 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
   return (
     <div className={`mx-auto w-full max-w-[768px] px-6 pb-6 ${className || ''}`}>
       <form
-        className="flex items-center gap-2 rounded-[28px] border border-zinc-200 bg-white px-3 py-2 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400"
+        className="flex items-center gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-3 py-2 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px]"
         onSubmit={(e) => {
           e.preventDefault();
           onSubmit(e);
@@ -56,7 +56,7 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
                 }
               }
             }}
-            className="w-full resize-none bg-transparent outline-none placeholder:text-zinc-400 min-h-[40px] leading-6"
+            className="w-full resize-none bg-transparent outline-none placeholder:text-zinc-400 min-h-[28px] leading-6"
           />
         </div>
         <button
