@@ -2,45 +2,73 @@ import { Mic, Paperclip, Search, Send } from 'lucide-react';
 
 type Props = {
   className?: string;
+  value: string;
+  disabled?: boolean;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
-export default function ChatInput({ className }: Props) {
+export default function ChatInput({ className, value, disabled, onChange, onSubmit }: Props) {
   return (
-    <div
-      className={`mx-auto w-full max-w-[768px] px-6 pb-6 ${className || ''}`}
-    >
-      <div className="flex items-center gap-2 rounded-[28px] border border-zinc-200 bg-white px-3 py-2 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400">
+    <div className={`mx-auto w-full max-w-[768px] px-6 pb-6 ${className || ''}`}>
+      <form
+        className="flex items-center gap-2 rounded-[28px] border border-zinc-200 bg-white px-3 py-2 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400"
+        onSubmit={onSubmit}
+      >
         <button
           type="button"
           className="inline-flex h-9 w-9 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
+          aria-label="附件"
         >
           <Paperclip className="h-4 w-4" />
         </button>
         <button
           type="button"
           className="inline-flex h-9 w-9 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
+          aria-label="搜索"
         >
           <Search className="h-4 w-4" />
         </button>
         <div className="flex-1 py-1 text-base text-zinc-900">
-          <div className="min-h-[40px] text-zinc-400">在这里输入内容（静态占位）</div>
+          <textarea
+            name="input"
+            value={value}
+            onChange={onChange}
+            placeholder="在这里输入内容"
+            rows={1}
+            onInput={(e) => {
+              const ta = e.currentTarget;
+              ta.style.height = 'auto';
+              ta.style.height = `${Math.min(ta.scrollHeight, 200)}px`;
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                const form = e.currentTarget.form;
+                form?.requestSubmit();
+              }
+            }}
+            className="w-full resize-none bg-transparent outline-none placeholder:text-zinc-400 min-h-[40px] leading-6"
+          />
         </div>
         <button
-          type="button"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-zinc-100 text-zinc-400"
-          aria-disabled="true"
+          type="submit"
+          disabled={disabled || value.trim().length === 0}
+          className={`inline-flex h-9 w-9 items-center justify-center rounded-full ${disabled || value.trim().length === 0 ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed' : 'bg-zinc-900 text-white hover:opacity-90'}`}
+          aria-label="发送"
         >
           <Send className="h-4 w-4" />
         </button>
         <button
           type="button"
           className="inline-flex h-9 w-9 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
+          aria-label="语音"
         >
           <Mic className="h-4 w-4" />
         </button>
-      </div>
+      </form>
       <div className="mt-2 text-center text-[12px] text-zinc-500">
-        本阶段为静态 UI 预览
+        回车发送，Shift+Enter 换行
       </div>
     </div>
   );
