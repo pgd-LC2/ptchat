@@ -1,3 +1,6 @@
+'use client';
+
+
 type MessageProps = {
   role: 'user' | 'assistant';
   content: string;
