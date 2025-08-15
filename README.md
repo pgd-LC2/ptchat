@@ -1,14 +1,12 @@
 # Devin PT Chat
 
-Next.js (App Router) + TypeScript + Tailwind + Supabase 基础配置，含最小可用的健康检查 API。
+Next.js (App Router) + TypeScript + Tailwind，纯前端实现聊天 UI 与交互（不依赖任何后端与第三方 SDK）。
 
 ## 技术栈
 - Next.js (App Router)
 - TypeScript
 - Tailwind CSS
-- Vercel AI SDK (`ai`)
 - 图标：`lucide-react`
-- 数据库/后端预留：`@supabase/supabase-js`
 
 ## 开发准备
 1) 安装依赖
@@ -23,11 +21,7 @@ npm install
 ```
 
 2) 配置环境变量
-- 复制 `.env.example` 为 `.env`，并填写 Supabase 项目的 URL 与匿名密钥：
-```
-NEXT_PUBLIC_SUPABASE_URL=...
-NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-```
+- 本项目为纯前端实现，无需任何环境变量配置。
 
 3) 本地运行
 ```bash
@@ -39,28 +33,19 @@ npm run dev
 ```
 访问 http://localhost:3000
 
-4) 健康检查
-- 打开 http://localhost:3000/api/health
-- 配置正确时返回：
-```json
-{ "ok": true, "supabase": "configured", "session": false }
-```
-若未配置或错误，会返回明确的错误信息。
+4) 本项目为纯前端实现，无需后端 API；启动后直接在首页体验聊天 UI 与交互。
 
 ## 目录结构
 ```
 app/
-  api/
-    health/route.ts     # 健康检查 API
   globals.css
   layout.tsx
   page.tsx
-lib/
-  supabase/
-    client.ts           # 浏览器端 Supabase 客户端工厂
-    server.ts           # 服务端 Supabase 客户端工厂
+components/
+  chat/
+  sidebar/
+  header/
 ```
 
 ## 说明
-- 当前仅包含基础数据库连接与验证。后续可根据需要加入基于 Cookie 的服务端会话管理，或集成 Vercel AI SDK 的 useChat 路由与界面。
-- 请勿将真实密钥提交到仓库；`.env` 已在 `.gitignore` 中忽略。
+- 当前仅包含纯前端聊天 UI 与交互逻辑示例，不依赖任何后端或第三方 SDK。
