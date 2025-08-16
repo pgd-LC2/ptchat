@@ -36,17 +36,17 @@ export default function Sidebar({
       <SidebarHeader />
       
       {/* New Chat Button */}
-      <div className="px-3">
+      <div className="px-2">
         <NewChatButton onClick={onNewChat} />
       </div>
       
       {/* Search Input */}
-      <div className="px-3">
+      <div className="px-2">
         <SearchButton onClick={onOpenSearchModal} />
       </div>
       
       {/* Library button */}
-      <div className="px-3">
+      <div className="px-2">
         <AppItem 
           icon={<Book className="h-4 w-4" />} 
           label="库" 
@@ -55,7 +55,7 @@ export default function Sidebar({
       </div>
       
       {/* App Items */}
-      <div className="px-3 py-1 space-y-1">
+      <div className="px-2 py-1 space-y-1">
         <AppItem 
           icon={<PlayCircle className="h-4 w-4" />} 
           label="Sora" 
@@ -74,11 +74,11 @@ export default function Sidebar({
       </div>
       
       {/* Chat History Section */}
-      <div className="px-3 py-1">
+      <div className="px-2 py-1">
         <h3 className="text-xs font-medium text-black/60 mb-2">聊天</h3>
       </div>
       
-      <div className="flex-1 overflow-y-auto px-3 space-y-1">
+      <div className="flex-1 overflow-y-auto px-2 space-y-1">
         {chatSessions.map((session) => (
           <ChatHistoryItem 
             key={session.id}

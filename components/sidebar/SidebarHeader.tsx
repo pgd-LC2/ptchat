@@ -3,7 +3,7 @@ import NewChatButton from './NewChatButton';
 
 export default function SidebarHeader() {
   return (
-    <div className="flex items-center justify-between px-3 py-3">
+    <div className="flex items-center justify-between px-2 py-3">
       {/* 右侧更多按钮 */}
       <button
         type="button"
