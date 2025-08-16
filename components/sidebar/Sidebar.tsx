@@ -36,15 +36,17 @@ export default function Sidebar({
       <SidebarHeader />
       
       {/* New Chat Button */}
-      <div className="px-3 py-1">
+      <div className="px-3">
         <NewChatButton onClick={onNewChat} />
       </div>
       
       {/* Search Input */}
-      <SearchButton onClick={onOpenSearchModal} />
+      <div className="px-3">
+        <SearchButton onClick={onOpenSearchModal} />
+      </div>
       
       {/* Library button */}
-      <div className="px-3 py-1">
+      <div className="px-3">
         <AppItem 
           icon={<Book className="h-4 w-4" />} 
           label="库" 
@@ -53,7 +55,7 @@ export default function Sidebar({
       </div>
       
       {/* App Items */}
-      <div className="px-3 py-2 space-y-1">
+      <div className="px-3 py-1 space-y-1">
         <AppItem 
           icon={<PlayCircle className="h-4 w-4" />} 
           label="Sora" 
@@ -72,7 +74,7 @@ export default function Sidebar({
       </div>
       
       {/* Chat History Section */}
-      <div className="px-3 py-2">
+      <div className="px-3 py-1">
         <h3 className="text-xs font-medium text-black/60 mb-2">聊天</h3>
       </div>
       
@@ -88,7 +90,7 @@ export default function Sidebar({
       </div>
       
       {/* 分割线 */}
-      <div className="mx-3 border-t border-zinc-200"></div>
+      <div className="border-t border-zinc-200"></div>
       
       <div className="py-3">
         <UserProfileMenu />
