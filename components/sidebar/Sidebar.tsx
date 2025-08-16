@@ -77,7 +77,6 @@ export default function Sidebar({
       </div>
       
       <div className="flex-1 overflow-y-auto px-3 space-y-1">
-      <div className="flex-1 overflow-y-auto px-3 space-y-2">
         {chatSessions.map((session) => (
           <ChatHistoryItem 
             key={session.id}
