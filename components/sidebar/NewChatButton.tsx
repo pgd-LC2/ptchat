@@ -13,7 +13,7 @@ export default function NewChatButton({ className, onClick }: Props) {
       onClick={onClick}
     >
       <PencilLine className="h-4 w-4 text-black/60" />
-      <span className="font-semibold">新建聊天</span>
+      新建聊天
     </button>
   );
 }
