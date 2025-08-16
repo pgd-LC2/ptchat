@@ -48,17 +48,17 @@ export default function InputMenu({ isVisible, onClose }: Props) {
       />
       
       {/* 菜单内容 */}
-      <div className="absolute bottom-full mb-2 left-0 z-20 w-72 rounded-2xl border border-zinc-200 bg-white shadow-lg overflow-hidden">
+      <div className="absolute bottom-full mb-3 left-0 z-50 w-80 rounded-2xl border border-zinc-300 bg-white shadow-xl overflow-hidden">
         <div className="p-2">
           {menuItems.map((item, index) => (
             <button
               key={index}
               type="button"
               disabled={item.disabled}
-              className={`w-full flex items-center gap-3 rounded-xl px-4 py-3 text-left transition-colors ${
+              className={`w-full flex items-center gap-3 rounded-xl px-4 py-3 text-left transition-colors text-black ${
                 item.disabled 
-                  ? 'text-black/60 cursor-not-allowed' 
-                  : 'text-black hover:bg-zinc-50'
+                  ? 'opacity-50 cursor-not-allowed' 
+                  : 'hover:bg-zinc-100'
               }`}
               onClick={() => {
                 if (!item.disabled) {
@@ -68,13 +68,13 @@ export default function InputMenu({ isVisible, onClose }: Props) {
                 }
               }}
             >
-              <item.icon className={`h-5 w-5 ${item.disabled ? 'text-black/60' : 'text-black/60'}`} />
+              <item.icon className="h-5 w-5 text-black/60" />
               <div className="flex-1">
-                <div className={item.disabled ? 'text-black/60' : 'text-black'}>
+                <div className="text-black font-medium">
                   {item.label}
                 </div>
                 {item.subtitle && (
-                  <div className="text-sm text-black/60 mt-1">
+                  <div className="text-xs text-black/60 mt-0.5">
                     {item.subtitle}
                   </div>
                 )}
@@ -85,14 +85,14 @@ export default function InputMenu({ isVisible, onClose }: Props) {
           {/* 更多选项 */}
           <button
             type="button"
-            className="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-left text-black hover:bg-zinc-50 transition-colors"
+            className="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-left text-black hover:bg-zinc-100 transition-colors"
             onClick={() => {
               console.log('Clicked: 更多');
               onClose();
             }}
           >
             <MoreHorizontal className="h-5 w-5 text-black/60" />
-            <div className="flex-1 text-black">更多</div>
+            <div className="flex-1 text-black font-medium">更多</div>
             <ChevronRight className="h-4 w-4 text-black/60" />
           </button>
         </div>
