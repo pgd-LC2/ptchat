@@ -66,6 +66,9 @@ export default function Sidebar() {
         <ChatHistoryItem title="深度学习原理解析" />
       </div>
       
+      {/* 分割线 */}
+      <div className="mx-3 border-t border-zinc-200"></div>
+      
       <div className="px-3 py-3">
         <UserProfileMenu />
       </div>
