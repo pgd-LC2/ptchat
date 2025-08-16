@@ -57,8 +57,8 @@ export default function InputMenu({ isVisible, onClose }: Props) {
               disabled={item.disabled}
               className={`w-full flex items-center gap-2 rounded-xl px-3 py-2 text-left transition-colors ${
                 item.disabled 
-                  ? 'text-black/60 cursor-not-allowed' 
-                  : 'text-black hover:bg-zinc-50'
+                  ? 'text-black/60 cursor-not-allowed font-light' 
+                  : 'text-black hover:bg-zinc-50 font-light'
               }`}
               onClick={() => {
                 if (!item.disabled) {
@@ -70,11 +70,11 @@ export default function InputMenu({ isVisible, onClose }: Props) {
             >
               <item.icon className={`h-5 w-5 ${item.disabled ? 'text-black/60' : 'text-black/60'}`} />
               <div className="flex-1">
-                <div className={`font-normal ${item.disabled ? 'text-black/60' : 'text-black'}`}>
+                <div className={`font-light ${item.disabled ? 'text-black/60' : 'text-black'}`}>
                   {item.label}
                 </div>
                 {item.subtitle && (
-                  <div className="text-sm text-black/60 mt-1 font-normal">
+                  <div className="text-xs text-black/60 mt-0.5 font-light">
                     {item.subtitle}
                   </div>
                 )}
@@ -85,15 +85,14 @@ export default function InputMenu({ isVisible, onClose }: Props) {
           {/* 更多选项 */}
           <button
             type="button"
-            className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-left text-black hover:bg-zinc-50 transition-colors font-normal"
+            className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-left text-black hover:bg-zinc-50 transition-colors font-light"
             onClick={() => {
               console.log('Clicked: 更多');
               onClose();
             }}
           >
             <MoreHorizontal className="h-5 w-5 text-black/60" />
-            <div className="flex-1 text-black font-normal">更多</div>
-            <ChevronRight className="h-4 w-4 text-black/60" />
+            <div className="flex-1 text-black font-light">更多</div>
           </button>
         </div>
       </div>
