@@ -15,7 +15,7 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
   return (
     <div className={`mx-auto w-full max-w-[768px] px-6 pb-6 ${className || ''}`}>
       <form
-        className="flex items-center gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-3 py-2 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px]"
+        className="flex items-center gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-4 py-3 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px]"
         onSubmit={(e) => {
           e.preventDefault();
           onSubmit(e);
@@ -35,17 +35,17 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
         >
           <Search className="h-4 w-4" />
         </button>
-        <div className="flex-1 py-1 text-base text-zinc-900">
+        <div className="flex-1 flex items-center text-base text-zinc-900">
           <textarea
             name="input"
             value={value}
             onChange={onChange}
-            placeholder="在这里输入内容"
+            placeholder="输入消息..."
             rows={1}
             onInput={(e) => {
               const ta = e.currentTarget;
               ta.style.height = 'auto';
-              ta.style.height = `${Math.min(ta.scrollHeight, 200)}px`;
+              ta.style.height = `${Math.min(ta.scrollHeight, 160)}px`;
             }}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
@@ -56,7 +56,7 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
                 }
               }
             }}
-            className="w-full resize-none bg-transparent outline-none placeholder:text-zinc-400 min-h-[28px] leading-6"
+            className="w-full resize-none bg-transparent outline-none placeholder:text-zinc-400 leading-6 py-1"
           />
         </div>
         <button
@@ -76,7 +76,7 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
         </button>
       </form>
       <div className="mt-2 text-center text-[12px] text-zinc-500">
-        回车发送，Shift+Enter 换行
+        按 Enter 发送，Shift+Enter 换行
       </div>
     </div>
   );
