@@ -1,7 +1,8 @@
 'use client';
 
-
-import { Mic, Paperclip, Search } from 'lucide-react';
+import { useState } from 'react';
+import { Mic, Plus } from 'lucide-react';
+import InputMenu from './InputMenu';
 
 // 自定义麦克风图标
 function MicrophoneIcon({ className }: { className?: string }) {
@@ -50,29 +51,31 @@ type Props = {
 };
 
 export default function ChatInput({ className, value, disabled, onChange, onSubmit }: Props) {
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+
   return (
     <div className={`w-full pb-3 max-w-[800px] mx-auto px-6 ${className || ''}`}>
       <form
-        className="flex items-center gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-4 py-3 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px]"
+        className="relative flex items-center gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-4 py-3 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px]"
         onSubmit={(e) => {
           e.preventDefault();
           onSubmit(e);
         }}
       >
+        <InputMenu 
+          isVisible={isMenuVisible} 
+          onClose={() => setIsMenuVisible(false)} 
+        />
+        
         <button
           type="button"
           className="inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50"
-          aria-label="附件"
+          aria-label="更多选项"
+          onClick={() => setIsMenuVisible(!isMenuVisible)}
         >
-          <Paperclip className="h-5 w-5" />
+          <Plus className="h-5 w-5" />
         </button>
-        <button
-          type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50"
-          aria-label="搜索"
-        >
-          <Search className="h-5 w-5" />
-        </button>
+        
         <div className="flex-1 flex items-center text-base text-black">
           <textarea
             name="input"
