@@ -13,7 +13,7 @@ type Props = {
 
 export default function ChatInput({ className, value, disabled, onChange, onSubmit }: Props) {
   return (
-    <div className={`mx-auto w-full max-w-[768px] px-6 pb-6 ${className || ''}`}>
+    <div className={`mx-auto w-full max-w-[768px] px-6 pb-3 ${className || ''}`}>
       <form
         className="flex items-center gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-4 py-3 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px]"
         onSubmit={(e) => {
