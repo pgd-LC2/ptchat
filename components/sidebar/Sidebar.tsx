@@ -78,7 +78,7 @@ export default function Sidebar({
       
       {/* Chat History Section */}
       <div className="px-2 py-1">
-        <h3 className="text-sm font-normal text-black/60 mb-2">聊天</h3>
+        <h3 className="text-sm font-normal text-black/60 mb-2 px-1">聊天</h3>
       </div>
       
       <div className="flex-1 overflow-y-auto px-2 space-y-0">
