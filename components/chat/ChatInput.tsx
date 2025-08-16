@@ -93,7 +93,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 const form = e.currentTarget.form;
-                if (form && value.trim().length > 0 && !disabled) {
+                if (form && e.currentTarget.value.trim().length > 0 && !disabled) {
                   form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
                 }
               }
