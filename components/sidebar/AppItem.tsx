@@ -12,6 +12,7 @@ export default function AppItem({ icon, label, active, onClick }: Props) {
     <button
       type="button"
       className={`flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm ${
+      }
       className={`flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-base ${
         active 
           ? 'bg-zinc-100 text-black' 
@@ -23,4 +24,5 @@ export default function AppItem({ icon, label, active, onClick }: Props) {
       <span>{label}</span>
     </button>
   );
+}
 }
