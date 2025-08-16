@@ -54,19 +54,19 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   return (
-    <div className={`w-full pb-3 max-w-[800px] mx-auto px-6 ${className || ''}`}>
+    <div className={`relative w-full pb-3 max-w-[800px] mx-auto px-6 ${className || ''}`}>
+      <InputMenu 
+        isVisible={isMenuVisible} 
+        onClose={() => setIsMenuVisible(false)} 
+      />
+      
       <form
-        className="relative flex items-center gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-4 py-3 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px]"
+        className="flex items-center gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-4 py-3 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px]"
         onSubmit={(e) => {
           e.preventDefault();
           onSubmit(e);
         }}
       >
-        <InputMenu 
-          isVisible={isMenuVisible} 
-          onClose={() => setIsMenuVisible(false)} 
-        />
-        
         <button
           type="button"
           className="inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50"

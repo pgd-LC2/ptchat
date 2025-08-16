@@ -48,7 +48,7 @@ export default function InputMenu({ isVisible, onClose }: Props) {
       />
       
       {/* 菜单内容 */}
-      <div className="absolute bottom-full mb-2 left-0 z-20 w-72 rounded-2xl border border-zinc-200 bg-white shadow-lg overflow-hidden">
+      <div className="absolute bottom-full mb-2 left-6 z-20 w-72 rounded-2xl border border-zinc-200 bg-white shadow-lg overflow-hidden">
         <div className="p-2">
           {menuItems.map((item, index) => (
             <button
