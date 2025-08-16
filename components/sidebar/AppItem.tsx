@@ -4,9 +4,10 @@ type Props = {
   icon: ReactNode;
   label: string;
   active?: boolean;
+  onClick?: () => void;
 };
 
-export default function AppItem({ icon, label, active }: Props) {
+export default function AppItem({ icon, label, active, onClick }: Props) {
   return (
     <button
       type="button"
@@ -15,6 +16,7 @@ export default function AppItem({ icon, label, active }: Props) {
           ? 'bg-zinc-100 text-black' 
           : 'text-black hover:bg-zinc-50'
       }`}
+      onClick={onClick}
     >
       <span className="text-black/60">{icon}</span>
       <span>{label}</span>
