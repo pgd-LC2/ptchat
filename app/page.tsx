@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Sidebar from '../components/sidebar/Sidebar';
 import ChatView, { ChatMessage } from '../components/chat/ChatView';
+import SearchModal from '../components/SearchModal';
 
 type ChatSession = {
   id: string;
@@ -33,7 +34,7 @@ export default function HomePage() {
     },
   ]);
   const [currentChatId, setCurrentChatId] = useState<string>('');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -42,11 +43,6 @@ export default function HomePage() {
     ? chatSessions.find(session => session.id === currentChatId)?.messages || []
     : [];
 
-  const filteredSessions = searchQuery
-    ? chatSessions.filter(session => 
-        session.title.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : chatSessions;
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
@@ -68,8 +64,12 @@ export default function HomePage() {
     setCurrentChatId(chatId);
   }, []);
 
-  const handleSearch = useCallback((query: string) => {
-    setSearchQuery(query);
+  const handleOpenSearchModal = useCallback(() => {
+    setIsSearchModalVisible(true);
+  }, []);
+
+  const handleCloseSearchModal = useCallback(() => {
+    setIsSearchModalVisible(false);
   }, []);
 
   const handleAppSelect = useCallback((appName: string) => {
@@ -167,12 +167,20 @@ export default function HomePage() {
   return (
     <>
       <Sidebar 
-        chatSessions={filteredSessions}
+        chatSessions={chatSessions}
         currentChatId={currentChatId}
         onNewChat={handleNewChat}
         onChatSelect={handleChatSelect}
-        onSearch={handleSearch}
+        onOpenSearchModal={handleOpenSearchModal}
         onAppSelect={handleAppSelect}
+      />
+      <SearchModal
+        isVisible={isSearchModalVisible}
+        onClose={handleCloseSearchModal}
+        chatSessions={chatSessions}
+        currentChatId={currentChatId}
+        onNewChat={handleNewChat}
+        onChatSelect={handleChatSelect}
       />
       <main className="flex-1">
         <ChatView

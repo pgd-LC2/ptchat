@@ -1,6 +1,6 @@
 import SidebarHeader from './SidebarHeader';
 import NewChatButton from './NewChatButton';
-import SearchInput from './SearchInput';
+import SearchButton from './SearchButton';
 import AppItem from './AppItem';
 import ChatHistoryItem from './ChatHistoryItem';
 import UserProfileMenu from '../header/UserProfileMenu';
@@ -18,7 +18,7 @@ type Props = {
   currentChatId: string;
   onNewChat: () => void;
   onChatSelect: (chatId: string) => void;
-  onSearch: (query: string) => void;
+  onOpenSearchModal: () => void;
   onAppSelect: (appName: string) => void;
 };
 
@@ -27,7 +27,7 @@ export default function Sidebar({
   currentChatId, 
   onNewChat, 
   onChatSelect, 
-  onSearch, 
+  onOpenSearchModal,
   onAppSelect 
 }: Props) {
   return (
@@ -41,7 +41,7 @@ export default function Sidebar({
       </div>
       
       {/* Search Input */}
-      <SearchInput onSearch={onSearch} />
+      <SearchButton onClick={onOpenSearchModal} />
       
       {/* Library button */}
       <div className="px-3 py-1">
