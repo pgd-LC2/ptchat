@@ -8,11 +8,10 @@ export default function ChatHistoryItem({ title, active, onClick }: Props) {
   return (
     <button
       type="button"
-      className={`w-full group flex h-8 items-center truncate rounded-md px-3 text-sm font-medium text-left ${active ? 'bg-zinc-100 text-black' : 'text-black/60 hover:bg-zinc-50'}`}
-      className={`w-full group flex h-8 items-center truncate rounded-md px-3 text-base font-medium text-left ${active ? 'bg-zinc-100 text-black' : 'text-black/60 hover:bg-zinc-50'}`}
+      className={`w-full group flex h-8 items-center truncate rounded-md px-3 text-base font-normal text-left ${active ? 'bg-zinc-100 text-black' : 'text-black/60 hover:bg-zinc-50'}`}
       onClick={onClick}
     >
-      <span className="truncate tracking-tight">{title}</span>
+      <span className="truncate">{title}</span>
     </button>
   );
 }

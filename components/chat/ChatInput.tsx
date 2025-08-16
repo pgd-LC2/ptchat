@@ -98,7 +98,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
                 }
               }
             }}
-            className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1"
+            className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
           />
         </div>
         <button
@@ -124,7 +124,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
         </button>
       </form>
       {!isWelcomeScreen && (
-        <div className="mt-1 text-center text-[12px] text-black/60">
+        <div className="mt-1 text-center text-sm font-normal text-black/60">
           按 Enter 发送，Shift+Enter 换行
         </div>
       )}

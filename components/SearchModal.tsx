@@ -107,7 +107,7 @@ export default function SearchModal({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="搜索聊天..."
-                className="flex-1 bg-transparent outline-none placeholder:text-black/60 text-base"
+                className="flex-1 bg-transparent outline-none placeholder:text-black/60 text-base font-normal"
                 autoFocus
               />
             </div>
@@ -127,7 +127,7 @@ export default function SearchModal({
           {/* 新建聊天按钮 */}
           <button
             type="button"
-            className="inline-flex items-center gap-3 rounded-md px-3 py-3 text-base text-black hover:bg-zinc-50 transition-colors w-full mb-3"
+            className="inline-flex items-center gap-3 rounded-md px-3 py-3 text-base font-normal text-black hover:bg-zinc-50 transition-colors w-full mb-3"
             onClick={handleNewChat}
           >
             <PencilLine className="h-5 w-5 text-black/60" />
@@ -144,12 +144,12 @@ export default function SearchModal({
           {/* 今天的聊天 */}
           {todaySessions.length > 0 && (
             <div className="mb-4">
-              <h3 className="text-xs font-medium text-black/60 mb-2 px-1">今天</h3>
+              <h3 className="text-sm font-normal text-black/60 mb-2 px-1">今天</h3>
               <div className="space-y-0">
                 {todaySessions.map((session) => (
-                  <div key={session.id} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-zinc-50 transition-colors cursor-pointer" onClick={() => handleChatSelect(session.id)}>
+                  <div key={session.id} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-zinc-50 transition-colors cursor-pointer text-base font-normal" onClick={() => handleChatSelect(session.id)}>
                     <MessageCircle className="h-4 w-4 text-black/60 flex-shrink-0" />
-                    <span className="text-sm text-black truncate">{session.title}</span>
+                    <span className="text-base font-normal text-black truncate">{session.title}</span>
                   </div>
                 ))}
               </div>
@@ -159,12 +159,12 @@ export default function SearchModal({
           {/* 昨天的聊天 */}
           {yesterdaySessions.length > 0 && (
             <div className="mb-4">
-              <h3 className="text-xs font-medium text-black/60 mb-2 px-1">昨天</h3>
+              <h3 className="text-sm font-normal text-black/60 mb-2 px-1">昨天</h3>
               <div className="space-y-0">
                 {yesterdaySessions.map((session) => (
-                  <div key={session.id} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-zinc-50 transition-colors cursor-pointer" onClick={() => handleChatSelect(session.id)}>
+                  <div key={session.id} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-zinc-50 transition-colors cursor-pointer text-base font-normal" onClick={() => handleChatSelect(session.id)}>
                     <MessageCircle className="h-4 w-4 text-black/60 flex-shrink-0" />
-                    <span className="text-sm text-black truncate">{session.title}</span>
+                    <span className="text-base font-normal text-black truncate">{session.title}</span>
                   </div>
                 ))}
               </div>
@@ -174,12 +174,12 @@ export default function SearchModal({
           {/* 更早的聊天 */}
           {olderSessions.length > 0 && (
             <div>
-              <h3 className="text-xs font-medium text-black/60 mb-2 px-1">更早</h3>
+              <h3 className="text-sm font-normal text-black/60 mb-2 px-1">更早</h3>
               <div className="space-y-0">
                 {olderSessions.map((session) => (
-                  <div key={session.id} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-zinc-50 transition-colors cursor-pointer" onClick={() => handleChatSelect(session.id)}>
+                  <div key={session.id} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-zinc-50 transition-colors cursor-pointer text-base font-normal" onClick={() => handleChatSelect(session.id)}>
                     <MessageCircle className="h-4 w-4 text-black/60 flex-shrink-0" />
-                    <span className="text-sm text-black truncate">{session.title}</span>
+                    <span className="text-base font-normal text-black truncate">{session.title}</span>
                   </div>
                 ))}
               </div>
