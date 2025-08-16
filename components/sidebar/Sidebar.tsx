@@ -81,7 +81,7 @@ export default function Sidebar({
         <h3 className="text-sm font-normal text-black/60 mb-2">聊天</h3>
       </div>
       
-      <div className="flex-1 overflow-y-auto px-2 space-y-1">
+      <div className="flex-1 overflow-y-auto px-2 space-y-2">
         {chatSessions.map((session) => (
           <ChatHistoryItem 
             key={session.id}
