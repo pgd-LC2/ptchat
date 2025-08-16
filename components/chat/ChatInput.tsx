@@ -63,10 +63,10 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
           type="submit"
           disabled={disabled || value.trim().length === 0}
           className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${
-            value.trim().length === 0 
-              ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
-              : disabled
+            disabled
               ? 'bg-[#E5F3FF] text-[#0285FF]'
+              : value.trim().length === 0 
+              ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
               : 'bg-[#0285FF] text-white hover:bg-[#0264CC]'
           }`}
           aria-label="发送"
