@@ -19,7 +19,7 @@ export default function AppItem({ icon, label, active, onClick }: Props) {
       onClick={onClick}
     >
       <span className="text-black/60">{icon}</span>
-      <span>{label}</span>
+      <span className="font-semibold">{label}</span>
     </button>
   );
 }

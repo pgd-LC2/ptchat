@@ -23,7 +23,7 @@ export default function SearchInput({ onSearch }: Props) {
           value={query}
           onChange={handleChange}
           placeholder="搜索聊天"
-          className="flex-1 bg-transparent outline-none placeholder:text-black/60"
+          className="flex-1 bg-transparent outline-none placeholder:text-black/60 font-semibold"
         />
       </div>
     </div>

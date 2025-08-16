@@ -90,7 +90,7 @@ export default function Sidebar({
       {/* 分割线 */}
       <div className="mx-3 border-t border-zinc-200"></div>
       
-      <div className="px-3 py-3">
+      <div>
         <UserProfileMenu />
       </div>
     </aside>
