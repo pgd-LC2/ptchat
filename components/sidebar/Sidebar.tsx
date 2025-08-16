@@ -103,7 +103,7 @@ export default function Sidebar({
       </div>
       
       {/* 分割线 */}
-      <div className="mx-2 my-2 border-t border-zinc-200"></div>
+      <div className="mx-2 my-1 border-t border-zinc-200"></div>
       
       {/* App Items */}
       <div className="px-2 py-1 space-y-0">
