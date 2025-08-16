@@ -10,7 +10,7 @@ export default function ChatMessage({ role, content }: MessageProps) {
   const isAssistant = role === 'assistant';
   return (
     <div
-      className={`rounded-full border p-3 min-w-[48px] min-h-[48px] w-fit flex items-end ${
+      className={`rounded-full border px-4 h-12 w-fit flex items-center ${
         isAssistant ? 'bg-zinc-50 border-zinc-200 mr-auto' : 'bg-[#E5F3FF] border-zinc-200 ml-auto'
       }`}
     >
