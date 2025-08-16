@@ -23,7 +23,7 @@ export default function ChatView({ messages, input, isLoading, onInputChange, on
   return (
     <div className="flex min-h-screen flex-col">
       <div className="flex-1 overflow-y-auto">
-        <div className="mx-auto w-full max-w-[768px] px-6 py-6 space-y-4">
+        <div className="mx-auto w-full max-w-[900px] px-8 py-6 space-y-4">
           {!hasMessages && <WelcomeScreen />}
           {messages.map((m) =>
             m.role === 'user' ? (
@@ -35,7 +35,7 @@ export default function ChatView({ messages, input, isLoading, onInputChange, on
         </div>
       </div>
       <div className="sticky bottom-0 border-t border-zinc-200 bg-[#F7F7F8]/80 backdrop-blur supports-[backdrop-filter]:bg-[#F7F7F8]/60">
-        <div className="mx-auto w-full max-w-[600px] px-4">
+        <div className="mx-auto w-full max-w-[900px] px-8">
           <ChatInput value={input} disabled={isLoading} onChange={onInputChange} onSubmit={onSubmit} />
         </div>
       </div>
