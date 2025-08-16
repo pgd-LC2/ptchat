@@ -78,7 +78,7 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
             name="input"
             value={value}
             onChange={onChange}
-            placeholder="输入消息..."
+            placeholder="询问任何问题"
             rows={1}
             onInput={(e) => {
               const ta = e.currentTarget;
