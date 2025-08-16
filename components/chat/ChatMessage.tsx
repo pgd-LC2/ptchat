@@ -14,7 +14,7 @@ export default function ChatMessage({ role, content }: MessageProps) {
         isAssistant ? 'bg-zinc-50 border-zinc-200 mr-auto' : 'bg-[#E5F3FF] border-zinc-200 ml-auto'
       }`}
     >
-      <div className="whitespace-pre-wrap text-zinc-900 text-base">{content}</div>
+      <div className="whitespace-pre-wrap text-black text-base">{content}</div>
     </div>
   );
 }
@@ -25,7 +25,7 @@ export function UserMessage({ content }: { content: string }) {
 
 export function AssistantMessage({ content }: { content: string }) {
   return (
-    <div className="whitespace-pre-wrap text-zinc-900 text-base mr-auto">
+    <div className="whitespace-pre-wrap text-black text-base mr-auto">
       {content}
     </div>
   );

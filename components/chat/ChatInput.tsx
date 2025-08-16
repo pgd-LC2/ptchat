@@ -61,19 +61,19 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
       >
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50"
           aria-label="附件"
         >
           <Paperclip className="h-5 w-5" />
         </button>
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50"
           aria-label="搜索"
         >
           <Search className="h-5 w-5" />
         </button>
-        <div className="flex-1 flex items-center text-base text-zinc-900">
+        <div className="flex-1 flex items-center text-base text-black">
           <textarea
             name="input"
             value={value}
@@ -94,12 +94,12 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
                 }
               }
             }}
-            className="w-full resize-none bg-transparent outline-none placeholder:text-zinc-400 leading-6 py-1"
+            className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1"
           />
         </div>
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50"
           aria-label="语音"
         >
           <MicrophoneIcon className="h-5 w-5" />
@@ -111,7 +111,7 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
             disabled
               ? 'bg-[#E5F3FF] text-[#0285FF]'
               : value.trim().length === 0 
-              ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
+              ? 'bg-zinc-100 text-black/60 cursor-not-allowed'
               : 'bg-[#0285FF] text-white hover:bg-[#0264CC]'
           }`}
           aria-label="发送"
@@ -119,7 +119,7 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
           <ArrowUpIcon className="h-5 w-5" />
         </button>
       </form>
-      <div className="mt-1 text-center text-[12px] text-zinc-500">
+      <div className="mt-1 text-center text-[12px] text-black/60">
         按 Enter 发送，Shift+Enter 换行
       </div>
     </div>
