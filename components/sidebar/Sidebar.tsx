@@ -97,5 +97,3 @@ export default function Sidebar({
     </aside>
   );
 }
-  )
-}
