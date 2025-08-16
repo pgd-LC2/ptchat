@@ -107,7 +107,7 @@ export default function SearchModal({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="搜索聊天..."
-                className="flex-1 bg-transparent outline-none placeholder:text-black/60 text-base"
+                className="flex-1 bg-transparent outline-none placeholder:text-black/60 text-lg tracking-tight"
                 autoFocus
               />
             </div>
@@ -127,7 +127,7 @@ export default function SearchModal({
           {/* 新建聊天按钮 */}
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm text-black hover:bg-zinc-50 transition-colors w-full mb-4"
+            className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-base tracking-tight text-black hover:bg-zinc-50 transition-colors w-full mb-4"
             onClick={handleNewChat}
           >
             <PencilLine className="h-4 w-4 text-black/60" />
@@ -136,7 +136,7 @@ export default function SearchModal({
 
           {/* 搜索结果 */}
           {searchQuery && filteredSessions.length === 0 && (
-            <div className="text-center py-8 text-black/60">
+            <div className="text-center py-8 text-base tracking-tight text-black/60">
               未找到匹配的聊天记录
             </div>
           )}
@@ -144,7 +144,7 @@ export default function SearchModal({
           {/* 今天的聊天 */}
           {todaySessions.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-xs font-medium text-black/60 mb-3">今天</h3>
+              <h3 className="text-sm font-medium tracking-tight text-black/60 mb-3">今天</h3>
               <div className="space-y-1">
                 {todaySessions.map((session) => (
                   <div key={session.id} className="flex items-center gap-3 p-2 rounded-md hover:bg-zinc-50 transition-colors">
@@ -163,7 +163,7 @@ export default function SearchModal({
           {/* 昨天的聊天 */}
           {yesterdaySessions.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-xs font-medium text-black/60 mb-3">昨天</h3>
+              <h3 className="text-sm font-medium tracking-tight text-black/60 mb-3">昨天</h3>
               <div className="space-y-1">
                 {yesterdaySessions.map((session) => (
                   <div key={session.id} className="flex items-center gap-3 p-2 rounded-md hover:bg-zinc-50 transition-colors">
@@ -182,7 +182,7 @@ export default function SearchModal({
           {/* 更早的聊天 */}
           {olderSessions.length > 0 && (
             <div>
-              <h3 className="text-xs font-medium text-black/60 mb-3">更早</h3>
+              <h3 className="text-sm font-medium tracking-tight text-black/60 mb-3">更早</h3>
               <div className="space-y-1">
                 {olderSessions.map((session) => (
                   <div key={session.id} className="flex items-center gap-3 p-2 rounded-md hover:bg-zinc-50 transition-colors">
