@@ -89,6 +89,7 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
           type="submit"
           disabled={disabled || value.trim().length === 0}
           className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${
+          }
           className={`inline-flex h-12 w-12 items-center justify-center rounded-full ${
             disabled
               ? 'bg-[#E5F3FF] text-[#0285FF]'
@@ -106,4 +107,5 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
       </div>
     </div>
   );
+}
 }
