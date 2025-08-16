@@ -16,7 +16,7 @@ export default function Sidebar() {
         <ChatHistoryItem title="TIM会议择" />
         <ChatHistoryItem title="设计图标方案" />
       </div>
-      <div className="px-2 py-3 border-t border-zinc-200">
+      <div className="px-2 py-3">
         <UserProfileMenu />
       </div>
     </aside>

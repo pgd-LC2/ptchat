@@ -34,7 +34,7 @@ export default function ChatView({ messages, input, isLoading, onInputChange, on
           )}
         </div>
       </div>
-      <div className="sticky bottom-0 border-t border-zinc-200 bg-[#F7F7F8]/80 backdrop-blur supports-[backdrop-filter]:bg-[#F7F7F8]/60">
+      <div className="sticky bottom-0 bg-[#F7F7F8]/80 backdrop-blur supports-[backdrop-filter]:bg-[#F7F7F8]/60">
         <ChatInput value={input} disabled={isLoading} onChange={onInputChange} onSubmit={onSubmit} />
       </div>
     </div>
