@@ -75,7 +75,7 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
           <Mic className="h-5 w-5" />
         </button>
       </form>
-      <div className="mt-2 text-center text-[12px] text-zinc-500">
+      <div className="mt-1 text-center text-[12px] text-zinc-500">
         按 Enter 发送，Shift+Enter 换行
       </div>
     </div>
