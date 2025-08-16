@@ -60,7 +60,7 @@ export default function Sidebar({
       {/* App Items */}
       <div className="px-2 py-1 space-y-0">
         <AppItem 
-          icon={<PlayCircle className="h-8 w-4" />} 
+          icon={<PlayCircle className="h-8 w-8" />} 
           label="Sora" 
           onClick={() => onAppSelect('Sora')}
         />
