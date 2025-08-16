@@ -42,14 +42,14 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
       >
         <button
           type="button"
-          className="inline-flex h-12 w-12 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
           aria-label="附件"
         >
           <Paperclip className="h-5 w-5" />
         </button>
         <button
           type="button"
-          className="inline-flex h-12 w-12 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
           aria-label="搜索"
         >
           <Search className="h-5 w-5" />
@@ -80,7 +80,7 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
         </div>
         <button
           type="button"
-          className="inline-flex h-12 w-12 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
           aria-label="语音"
         >
           <Mic className="h-5 w-5" />
@@ -88,7 +88,7 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
         <button
           type="submit"
           disabled={disabled || value.trim().length === 0}
-          className={`inline-flex h-12 w-12 items-center justify-center rounded-full ${
+          className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${
             disabled
               ? 'bg-[#E5F3FF] text-[#0285FF]'
               : value.trim().length === 0 
