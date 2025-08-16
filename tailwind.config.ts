@@ -7,7 +7,11 @@ export default {
     './pages/**/*.{ts,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        'pulse': 'pulse 1.4s ease-in-out infinite',
+      }
+    },
   },
   plugins: [],
 } satisfies Config;

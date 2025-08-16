@@ -6,6 +6,16 @@ type MessageProps = {
   content: string;
 };
 
+function LoadingDots() {
+  return (
+    <div className="flex items-center space-x-1">
+      <div className="w-2 h-2 bg-black/40 rounded-full animate-pulse"></div>
+      <div className="w-2 h-2 bg-black/40 rounded-full animate-pulse [animation-delay:0.2s]"></div>
+      <div className="w-2 h-2 bg-black/40 rounded-full animate-pulse [animation-delay:0.4s]"></div>
+    </div>
+  );
+}
+
 export default function ChatMessage({ role, content }: MessageProps) {
   const isAssistant = role === 'assistant';
   return (
@@ -24,6 +34,15 @@ export function UserMessage({ content }: { content: string }) {
 }
 
 export function AssistantMessage({ content }: { content: string }) {
+  // 如果内容为空，显示加载动画
+  if (!content) {
+    return (
+      <div className="mr-auto">
+        <LoadingDots />
+      </div>
+    );
+  }
+
   return (
     <div className="whitespace-pre-wrap text-black text-base mr-auto">
       {content}
