@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Search, X, MessageCircle, PencilLine } from 'lucide-react';
 import ChatHistoryItem from './sidebar/ChatHistoryItem';
 
@@ -29,6 +29,22 @@ export default function SearchModal({
   onChatSelect 
 }: Props) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  // 处理动画状态
+  useEffect(() => {
+    if (isVisible) {
+      setIsAnimating(true);
+    }
+  }, [isVisible]);
+
+  const handleClose = useCallback(() => {
+    setIsAnimating(false);
+    // 延迟关闭以允许动画完成
+    setTimeout(() => {
+      onClose();
+    }, 150);
+  }, [onClose]);
 
   const filteredSessions = searchQuery
     ? chatSessions.filter(session => 
@@ -38,12 +54,12 @@ export default function SearchModal({
 
   const handleChatSelect = useCallback((chatId: string) => {
     onChatSelect(chatId);
-    onClose();
+    handleClose();
   }, [onChatSelect, onClose]);
 
   const handleNewChat = useCallback(() => {
     onNewChat();
-    onClose();
+    handleClose();
   }, [onNewChat, onClose]);
 
   // 按时间分组聊天会话
@@ -66,19 +82,25 @@ export default function SearchModal({
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className={`fixed inset-0 z-50 flex items-center justify-center transition-all duration-150 ${
+      isAnimating ? 'opacity-100' : 'opacity-0'
+    }`}>
       {/* 背景遮罩 */}
       <div 
-        className="absolute inset-0 bg-black/50"
-        onClick={onClose}
+        className={`absolute inset-0 bg-black/50 transition-opacity duration-150 ${
+          isAnimating ? 'opacity-100' : 'opacity-0'
+        }`}
+        onClick={handleClose}
       />
       
       {/* 模态框内容 */}
-      <div className="relative w-full max-w-2xl max-h-[80vh] bg-white rounded-2xl shadow-2xl overflow-hidden">
+      <div className={`relative w-full max-w-2xl max-h-[80vh] bg-white rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-150 ${
+        isAnimating ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+      }`}>
         {/* 头部搜索区域 */}
-        <div className="p-6 border-b border-zinc-200">
+        <div className="p-6 border-b border-zinc-200 shadow-sm">
           <div className="flex items-center gap-4">
-            <div className="flex-1 flex items-center gap-3 rounded-lg border border-zinc-200 bg-white px-4 py-3">
+            <div className="flex-1 flex items-center gap-3 rounded-lg border border-zinc-200 bg-white px-4 py-3 shadow-sm focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:border-blue-500/40 transition-all">
               <Search className="h-5 w-5 text-black/60" />
               <input
                 type="text"
@@ -91,8 +113,8 @@ export default function SearchModal({
             </div>
             <button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-black/60 hover:bg-zinc-100"
-              onClick={onClose}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-black/60 hover:bg-zinc-100 transition-colors"
+              onClick={handleClose}
               aria-label="关闭"
             >
               <X className="h-5 w-5" />
@@ -105,7 +127,7 @@ export default function SearchModal({
           {/* 新建聊天按钮 */}
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm text-black hover:bg-zinc-50 transition w-full mb-4"
+            className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm text-black hover:bg-zinc-50 transition-colors w-full mb-4"
             onClick={handleNewChat}
           >
             <PencilLine className="h-4 w-4 text-black/60" />
@@ -125,7 +147,7 @@ export default function SearchModal({
               <h3 className="text-xs font-medium text-black/60 mb-3">今天</h3>
               <div className="space-y-1">
                 {todaySessions.map((session) => (
-                  <div key={session.id} className="flex items-center gap-3 p-2 rounded-md hover:bg-zinc-50">
+                  <div key={session.id} className="flex items-center gap-3 p-2 rounded-md hover:bg-zinc-50 transition-colors">
                     <MessageCircle className="h-4 w-4 text-black/60 flex-shrink-0" />
                     <ChatHistoryItem
                       title={session.title}
@@ -144,7 +166,7 @@ export default function SearchModal({
               <h3 className="text-xs font-medium text-black/60 mb-3">昨天</h3>
               <div className="space-y-1">
                 {yesterdaySessions.map((session) => (
-                  <div key={session.id} className="flex items-center gap-3 p-2 rounded-md hover:bg-zinc-50">
+                  <div key={session.id} className="flex items-center gap-3 p-2 rounded-md hover:bg-zinc-50 transition-colors">
                     <MessageCircle className="h-4 w-4 text-black/60 flex-shrink-0" />
                     <ChatHistoryItem
                       title={session.title}
@@ -163,7 +185,7 @@ export default function SearchModal({
               <h3 className="text-xs font-medium text-black/60 mb-3">更早</h3>
               <div className="space-y-1">
                 {olderSessions.map((session) => (
-                  <div key={session.id} className="flex items-center gap-3 p-2 rounded-md hover:bg-zinc-50">
+                  <div key={session.id} className="flex items-center gap-3 p-2 rounded-md hover:bg-zinc-50 transition-colors">
                     <MessageCircle className="h-4 w-4 text-black/60 flex-shrink-0" />
                     <ChatHistoryItem
                       title={session.title}
