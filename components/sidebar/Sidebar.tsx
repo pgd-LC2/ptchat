@@ -65,12 +65,12 @@ export default function Sidebar({
           onClick={() => onAppSelect('Sora')}
         />
         <AppItem 
-          icon={<Zap className="h-4 w-4" />} 
+          icon={<Zap className="h-6 w-6" />} 
           label="GPT" 
           onClick={() => onAppSelect('GPT')}
         />
         <AppItem 
-          icon={<Sparkles className="h-4 w-4" />} 
+          icon={<Sparkles className="h-6 w-6" />} 
           label="Bolt Prompter" 
           onClick={() => onAppSelect('Bolt Prompter')}
         />
