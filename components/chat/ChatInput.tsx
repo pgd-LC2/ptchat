@@ -62,7 +62,13 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
         <button
           type="submit"
           disabled={disabled || value.trim().length === 0}
-          className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${disabled || value.trim().length === 0 ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed' : 'bg-zinc-900 text-white hover:opacity-90'}`}
+          className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${
+            value.trim().length === 0 
+              ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
+              : disabled
+              ? 'bg-[#E5F3FF] text-[#0285FF]'
+              : 'bg-[#0285FF] text-white hover:bg-[#0264CC]'
+          }`}
           aria-label="发送"
         >
           <Send className="h-5 w-5" />
