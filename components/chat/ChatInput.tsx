@@ -23,17 +23,17 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
       >
         <button
           type="button"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
           aria-label="附件"
         >
-          <Paperclip className="h-4 w-4" />
+          <Paperclip className="h-5 w-5" />
         </button>
         <button
           type="button"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
           aria-label="搜索"
         >
-          <Search className="h-4 w-4" />
+          <Search className="h-5 w-5" />
         </button>
         <div className="flex-1 flex items-center text-base text-zinc-900">
           <textarea
@@ -62,17 +62,17 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
         <button
           type="submit"
           disabled={disabled || value.trim().length === 0}
-          className={`inline-flex h-9 w-9 items-center justify-center rounded-full ${disabled || value.trim().length === 0 ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed' : 'bg-zinc-900 text-white hover:opacity-90'}`}
+          className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${disabled || value.trim().length === 0 ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed' : 'bg-zinc-900 text-white hover:opacity-90'}`}
           aria-label="发送"
         >
-          <Send className="h-4 w-4" />
+          <Send className="h-5 w-5" />
         </button>
         <button
           type="button"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
           aria-label="语音"
         >
-          <Mic className="h-4 w-4" />
+          <Mic className="h-5 w-5" />
         </button>
       </form>
       <div className="mt-2 text-center text-[12px] text-zinc-500">
