@@ -1,6 +1,6 @@
 import NewChatButton from './NewChatButton';
 import ChatHistoryItem from './ChatHistoryItem';
-import UserProfileMenu from '../header/UserProfileMenu';
+import UserProfileMenu from '@/components/header/UserProfileMenu';
 
 export default function Sidebar() {
   return (

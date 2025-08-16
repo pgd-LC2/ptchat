@@ -1,8 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import Sidebar from '../components/sidebar/Sidebar';
-import ChatView, { ChatMessage } from '../components/chat/ChatView';
+import Sidebar from '@/components/sidebar/Sidebar';
+import ChatView, { ChatMessage } from '@/components/chat/ChatView';
 
 export default function HomePage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
