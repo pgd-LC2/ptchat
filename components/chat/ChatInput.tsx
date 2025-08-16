@@ -46,22 +46,23 @@ type Props = {
   className?: string;
   value: string;
   disabled?: boolean;
+  isWelcomeScreen?: boolean;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
-export default function ChatInput({ className, value, disabled, onChange, onSubmit }: Props) {
+export default function ChatInput({ className, value, disabled, isWelcomeScreen = false, onChange, onSubmit }: Props) {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   return (
-    <div className={`relative w-full pb-3 max-w-[800px] mx-auto px-6 ${className || ''}`}>
+    <div className={`relative w-full mx-auto ${isWelcomeScreen ? 'max-w-[700px]' : 'max-w-[800px] pb-3 px-6'} ${className || ''}`}>
       <InputMenu 
         isVisible={isMenuVisible} 
         onClose={() => setIsMenuVisible(false)} 
       />
       
       <form
-        className="flex items-center gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-4 py-3 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px]"
+        className={`flex items-center gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-4 py-3 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px] ${isWelcomeScreen ? 'mx-4' : ''}`}
         onSubmit={(e) => {
           e.preventDefault();
           onSubmit(e);
@@ -69,7 +70,7 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
       >
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50"
+          className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 ${isWelcomeScreen ? 'bg-zinc-100' : ''}`}
           aria-label="更多选项"
           onClick={() => setIsMenuVisible(!isMenuVisible)}
         >
@@ -122,9 +123,11 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
           <ArrowUpIcon className="h-5 w-5" />
         </button>
       </form>
-      <div className="mt-1 text-center text-[12px] text-black/60">
-        按 Enter 发送，Shift+Enter 换行
-      </div>
+      {!isWelcomeScreen && (
+        <div className="mt-1 text-center text-[12px] text-black/60">
+          按 Enter 发送，Shift+Enter 换行
+        </div>
+      )}
     </div>
   );
 }

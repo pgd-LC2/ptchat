@@ -1,23 +1,25 @@
+import ChatInput from './ChatInput';
+
 type Props = {
   className?: string;
+  input: string;
+  isLoading: boolean;
+  onInputChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
-export default function WelcomeScreen({ className }: Props) {
+export default function WelcomeScreen({ className, input, isLoading, onInputChange, onSubmit }: Props) {
   return (
-    <section className={`w-full py-10 ${className || ''}`}>
-      <h2 className="text-3xl font-semibold text-black">ChatGPT</h2>
-      <p className="mt-2 text-sm text-black/60">开始对话，或选择一个示例提示。</p>
-      <div className="mt-6 flex flex-wrap gap-2">
-        {['写代码', '制定计划', '总结文本', '给我惊喜', '更多'].map((t) => (
-          <button
-            key={t}
-            type="button"
-            className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1.5 text-sm text-black/60 hover:bg-zinc-50"
-          >
-            {t}
-          </button>
-        ))}
-      </div>
+    <section className={`flex flex-col items-center justify-center flex-1 w-full ${className || ''}`}>
+      <h2 className="text-2xl font-normal text-black mb-8">在时刻准备着。</h2>
+      <ChatInput
+        value={input}
+        disabled={isLoading}
+        isWelcomeScreen={true}
+        onChange={onInputChange}
+        onSubmit={onSubmit}
+        className="w-full"
+      />
     </section>
   );
 }
