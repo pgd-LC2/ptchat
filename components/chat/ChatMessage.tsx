@@ -24,5 +24,9 @@ export function UserMessage({ content }: { content: string }) {
 }
 
 export function AssistantMessage({ content }: { content: string }) {
-  return <ChatMessage role="assistant" content={content} />;
+  return (
+    <div className="whitespace-pre-wrap text-zinc-900 text-base mr-auto">
+      {content}
+    </div>
+  );
 }
