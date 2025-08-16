@@ -6,13 +6,9 @@ type MessageProps = {
   content: string;
 };
 
-function LoadingDots() {
+function LoadingDot() {
   return (
-    <div className="flex items-center space-x-1">
-      <div className="w-2 h-2 bg-black/40 rounded-full animate-pulse"></div>
-      <div className="w-2 h-2 bg-black/40 rounded-full animate-pulse [animation-delay:0.2s]"></div>
-      <div className="w-2 h-2 bg-black/40 rounded-full animate-pulse [animation-delay:0.4s]"></div>
-    </div>
+    <div className="w-3 h-3 bg-black/40 rounded-full animate-pulse"></div>
   );
 }
 
@@ -38,7 +34,7 @@ export function AssistantMessage({ content }: { content: string }) {
   if (!content) {
     return (
       <div className="mr-auto">
-        <LoadingDots />
+        <LoadingDot />
       </div>
     );
   }
