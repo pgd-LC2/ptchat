@@ -71,7 +71,10 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
           type="button"
           className="inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50"
           aria-label="更多选项"
-          onClick={() => setIsMenuVisible(!isMenuVisible)}
+          onClick={() => {
+            setIsMenuVisible(!isMenuVisible);
+            console.log('isMenuVisible:', !isMenuVisible); // 打印点击后的状态
+          }}
         >
           <Plus className="h-5 w-5" />
         </button>
