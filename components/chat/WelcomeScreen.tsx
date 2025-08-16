@@ -4,7 +4,7 @@ type Props = {
 
 export default function WelcomeScreen({ className }: Props) {
   return (
-    <section className={`mx-auto w-full max-w-[768px] px-6 py-10 ${className || ''}`}>
+    <section className={`w-full py-10 ${className || ''}`}>
       <h2 className="text-3xl font-semibold text-zinc-900">ChatGPT</h2>
       <p className="mt-2 text-sm text-zinc-500">开始对话，或选择一个示例提示。</p>
       <div className="mt-6 flex flex-wrap gap-2">
