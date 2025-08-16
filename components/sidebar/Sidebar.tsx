@@ -45,7 +45,7 @@ function GPTIcon({ className }: { className?: string }) {
 function BoltIcon({ className }: { className?: string }) {
   return (
     <img 
-      className={`bg-token-tertiary h-full w-full ${className || ''}`}
+      className={`h-5 w-5 object-contain ${className || ''}`}
       alt="Bolt"
       width="20"
       height="20"
