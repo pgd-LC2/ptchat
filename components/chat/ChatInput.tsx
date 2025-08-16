@@ -13,9 +13,9 @@ type Props = {
 
 export default function ChatInput({ className, value, disabled, onChange, onSubmit }: Props) {
   return (
-    <div className={`w-full pb-3 ${className || ''}`}>
+    <div className={`w-full py-2 ${className || ''}`}>
       <form
-        className="flex items-center gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-4 py-3 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px]"
+        className="flex items-center gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-3 py-2 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[44px]"
         onSubmit={(e) => {
           e.preventDefault();
           onSubmit(e);
@@ -23,17 +23,17 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
       >
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
+          className="inline-flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
           aria-label="附件"
         >
-          <Paperclip className="h-5 w-5" />
+          <Paperclip className="h-4 w-4" />
         </button>
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
+          className="inline-flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
           aria-label="搜索"
         >
-          <Search className="h-5 w-5" />
+          <Search className="h-4 w-4" />
         </button>
         <div className="flex-1 flex items-center text-base text-zinc-900">
           <textarea
@@ -62,17 +62,17 @@ export default function ChatInput({ className, value, disabled, onChange, onSubm
         <button
           type="submit"
           disabled={disabled || value.trim().length === 0}
-          className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${disabled || value.trim().length === 0 ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed' : 'bg-zinc-900 text-white hover:opacity-90'}`}
+          className={`inline-flex h-8 w-8 items-center justify-center rounded-full ${disabled || value.trim().length === 0 ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed' : 'bg-zinc-900 text-white hover:opacity-90'}`}
           aria-label="发送"
         >
-          <Send className="h-5 w-5" />
+          <Send className="h-4 w-4" />
         </button>
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
+          className="inline-flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-50"
           aria-label="语音"
         >
-          <Mic className="h-5 w-5" />
+          <Mic className="h-4 w-4" />
         </button>
       </form>
       <div className="mt-1 text-center text-[12px] text-zinc-500">
