@@ -103,26 +103,6 @@ export default function InputMenu({ isVisible, onClose }: Props) {
             <ChevronRight className="h-4 w-4 text-black/60" />
           </button>
         </div>
-                  </div>
-                )}
-              </div>
-            </button>
-          ))}
-          
-          {/* 更多选项 */}
-          <button
-            type="button"
-            className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-left text-black hover:bg-zinc-50 transition-colors font-normal"
-            onClick={() => {
-              console.log('Clicked: 更多');
-              onClose();
-            }}
-          >
-            <MoreHorizontal className="h-5 w-5 text-black/60" />
-            <div className="flex-1 text-sm text-black font-normal">更多</div>
-            <ChevronRight className="h-4 w-4 text-black/60" />
-          </button>
-        </div>
       </div>
     </>
   );
