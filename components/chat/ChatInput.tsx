@@ -73,20 +73,12 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
       />
       
       <form
-        className={`flex flex-col items-start gap-2 overflow-hidden border border-zinc-200 bg-white shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 transition-all duration-300 ${selectedFunction ? 'rounded-2xl px-6 py-4 min-h-[120px]' : 'rounded-full px-4 py-3 min-h-[52px]'} ${isWelcomeScreen ? 'mx-4' : ''}`}
+        className={`flex flex-col items-start gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-4 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 transition-all duration-300 ${selectedFunction ? 'py-3 min-h-[80px]' : 'py-3 min-h-[52px]'} ${isWelcomeScreen ? 'mx-4' : ''}`}
         onSubmit={(e) => {
           e.preventDefault();
           onSubmit(e);
         }}
       >
-        {/* 顶部标题行 - 只在选择功能时显示 */}
-        {selectedFunction && (
-          <div className="w-full">
-            <h3 className="text-base font-normal text-black/80 mb-2">学习新知识</h3>
-          </div>
-        )}
-        
-        {/* 主要输入行 */}
         <div className="flex items-center gap-2 w-full">
           <button
             type="button"
@@ -98,21 +90,20 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
           </button>
           
           <div className="flex-1 flex items-center text-base text-black">
-            <div className="flex items-center gap-3 w-full">
-              {selectedFunction && (
-                <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-full px-3 py-1.5 text-sm animate-fadeIn">
-                  <selectedFunction.icon className="h-4 w-4 text-blue-600" />
-                  <span className="text-blue-800 font-medium">{selectedFunction.label}</span>
-                  <button
-                    type="button"
-                    className="ml-1 inline-flex h-4 w-4 items-center justify-center rounded-full hover:bg-blue-200 transition-colors"
-                    onClick={() => setSelectedFunction(null)}
-                    aria-label="移除选择"
-                  >
-                    <span className="text-blue-600 text-xs leading-none">×</span>
-                  </button>
-                </div>
-              )}
+            {selectedFunction && (
+              <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-full px-3 py-1.5 text-sm animate-fadeIn mr-3">
+                <selectedFunction.icon className="h-4 w-4 text-blue-600" />
+                <span className="text-blue-800 font-medium">{selectedFunction.label}</span>
+                <button
+                  type="button"
+                  className="ml-1 inline-flex h-4 w-4 items-center justify-center rounded-full hover:bg-blue-200 transition-colors"
+                  onClick={() => setSelectedFunction(null)}
+                  aria-label="移除选择"
+                >
+                  <span className="text-blue-600 text-xs leading-none">×</span>
+                </button>
+              </div>
+            )}
             <textarea
               name="input"
               value={value}
@@ -135,7 +126,6 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
               }}
               className={`w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal transition-all duration-300 ${selectedFunction ? 'min-h-[40px]' : ''}`}
             />
-            </div>
           </div>
           
           <button
