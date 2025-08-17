@@ -5,10 +5,9 @@ import { Paperclip, Book, Image, Lightbulb, Telescope, MoreHorizontal, ChevronRi
 type Props = {
   isVisible: boolean;
   onClose: () => void;
-  onSelectMenuItem: (itemLabel: string) => void;
 };
 
-export default function InputMenu({ isVisible, onClose, onSelectMenuItem }: Props) {
+export default function InputMenu({ isVisible, onClose }: Props) {
   if (!isVisible) return null;
 
   const menuItems = [
@@ -50,7 +49,7 @@ export default function InputMenu({ isVisible, onClose, onSelectMenuItem }: Prop
       />
       
       {/* 菜单内容 */}
-      <div className="absolute bottom-full mb-2 left-4 z-20 w-56 rounded-3xl border border-zinc-200 bg-white shadow-lg overflow-hidden">
+      <div className="absolute bottom-full mb-2 left-6 z-20 w-56 rounded-3xl border border-zinc-200 bg-white shadow-lg overflow-hidden">
         <div className="p-1">
           {menuItems.map((item, index) => (
             <div key={index}>
@@ -64,7 +63,8 @@ export default function InputMenu({ isVisible, onClose, onSelectMenuItem }: Prop
                 }`}
                 onClick={() => {
                   if (!item.disabled) {
-                    onSelectMenuItem(item.label);
+                    // 这里可以添加具体的功能
+                    console.log(`Clicked: ${item.label}`);
                     onClose();
                   }
                 }}
@@ -95,7 +95,7 @@ export default function InputMenu({ isVisible, onClose, onSelectMenuItem }: Prop
             type="button"
             className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-left text-black hover:bg-zinc-50 transition-colors"
             onClick={() => {
-              onSelectMenuItem('更多');
+              console.log('Clicked: 更多');
               onClose();
             }}
           >

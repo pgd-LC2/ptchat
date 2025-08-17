@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Mic, Plus, X } from 'lucide-react';
+import { Mic, Plus } from 'lucide-react';
 import InputMenu from './InputMenu';
 
 // 自定义麦克风图标
@@ -53,119 +53,75 @@ type Props = {
 
 export default function ChatInput({ className, value, disabled, isWelcomeScreen = false, onChange, onSubmit }: Props) {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
-  const [selectedFunctions, setSelectedFunctions] = useState<string[]>([]);
-
-  const handleAddFunction = (functionName: string) => {
-    if (!selectedFunctions.includes(functionName)) {
-      setSelectedFunctions(prev => [...prev, functionName]);
-    }
-    setIsMenuVisible(false);
-  };
-
-  const handleRemoveFunction = (functionName: string) => {
-    setSelectedFunctions(prev => prev.filter(f => f !== functionName));
-  };
 
   return (
     <div className={`relative w-full mx-auto ${isWelcomeScreen ? 'max-w-[750px]' : 'max-w-[750px] pb-3 px-6'} ${className || ''}`}>
       <InputMenu 
         isVisible={isMenuVisible} 
         onClose={() => setIsMenuVisible(false)} 
-        onSelectMenuItem={handleAddFunction}
       />
       
       <form
-        className={`flex flex-col rounded-[28px] overflow-hidden border border-zinc-200 bg-white shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px] ${isWelcomeScreen ? 'mx-4' : ''}`}
+        className={`flex items-center gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-4 py-3 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px] ${isWelcomeScreen ? 'mx-4' : ''}`}
         onSubmit={(e) => {
           e.preventDefault();
           onSubmit(e);
         }}
       >
-        {/* 第一行：只有输入框 */}
-        <div className={`flex items-center gap-2 px-4 ${selectedFunctions.length === 0 ? 'py-3' : 'pt-3'}`}>
-          <div className="flex-1 flex items-center text-base text-black">
-            <textarea
-              name="input"
-              value={value}
-              onChange={onChange}
-              placeholder="询问任何问题"
-              rows={1}
-              onInput={(e) => {
-                const ta = e.currentTarget;
-                ta.style.height = 'auto';
-                ta.style.height = `${Math.min(ta.scrollHeight, 160)}px`;
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault();
-                  const form = e.currentTarget.form;
-                  if (form && e.currentTarget.value.trim().length > 0 && !disabled) {
-                    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-                  }
+        <button
+          type="button"
+          className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 ${isWelcomeScreen ? 'bg-zinc-100' : ''}`}
+          aria-label="更多选项"
+          onClick={() => setIsMenuVisible(!isMenuVisible)}
+        >
+          <Plus className="h-5 w-5 text-black" />
+        </button>
+        
+        <div className="flex-1 flex items-center text-base text-black">
+          <textarea
+            name="input"
+            value={value}
+            onChange={onChange}
+            placeholder="询问任何问题"
+            rows={1}
+            onInput={(e) => {
+              const ta = e.currentTarget;
+              ta.style.height = 'auto';
+              ta.style.height = `${Math.min(ta.scrollHeight, 160)}px`;
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                const form = e.currentTarget.form;
+                if (form && e.currentTarget.value.trim().length > 0 && !disabled) {
+                  form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
                 }
-              }}
-              className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
-            />
-          </div>
+              }
+            }}
+            className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
+          />
         </div>
-
-        {/* 第二行：加号、功能标签、语音按钮、发送按钮 */}
-        {selectedFunctions.length > 0 && (
-        <div className="flex items-center gap-2 px-4 pb-3">
-          <button
-            type="button"
-            className={`inline-flex h-8 w-8 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 ${isWelcomeScreen ? 'bg-zinc-100' : ''}`}
-            aria-label="更多选项"
-            onClick={() => setIsMenuVisible(!isMenuVisible)}
-          >
-            <Plus className="h-4 w-4 text-black" />
-          </button>
-          
-          {/* 功能标签 */}
-          {selectedFunctions.map((functionName) => (
-            <div
-              key={functionName}
-              className="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-3 py-1.5 rounded-full text-sm"
-            >
-              <span>{functionName}</span>
-              <button
-                type="button"
-                onClick={() => handleRemoveFunction(functionName)}
-                className="inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-blue-200"
-                aria-label={`移除 ${functionName}`}
-              >
-                <X className="h-3 w-3" />
-              </button>
-            </div>
-          ))}
-          
-          {/* 弹性间隔 */}
-          <div className="flex-1"></div>
-          
-          <button
-            type="button"
-            className="inline-flex h-8 w-8 items-center justify-center rounded-full hover:bg-zinc-50"
-            aria-label="语音"
-          >
-            <MicrophoneIcon className="h-4 w-4 text-black" />
-          </button>
-          
-          <button
-            type="submit"
-            disabled={disabled || value.trim().length === 0}
-            className={`inline-flex h-8 w-8 items-center justify-center rounded-full ${
-              disabled
-                ? 'bg-sky-100 text-sky-900 opacity-50'
-                : value.trim().length === 0 
-                ? 'bg-zinc-100 text-black/60 cursor-not-allowed'
-                : 'bg-sky-100 text-sky-900 hover:bg-sky-200'
-            }`}
-            aria-label="发送"
-          >
-            <ArrowUpIcon className="h-4 w-4" />
-          </button>
-        </div>
-        )}
+        <button
+          type="button"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-zinc-50"
+          aria-label="语音"
+        >
+          <MicrophoneIcon className="h-5 w-5 text-black" />
+        </button>
+        <button
+          type="submit"
+          disabled={disabled || value.trim().length === 0}
+          className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${
+            disabled
+              ? 'bg-[#E5F3FF] text-[#0285FF]'
+              : value.trim().length === 0 
+              ? 'bg-zinc-100 text-black/60 cursor-not-allowed'
+              : 'bg-[#0285FF] text-white hover:bg-[#0264CC]'
+          }`}
+          aria-label="发送"
+        >
+          <ArrowUpIcon className="h-5 w-5" />
+        </button>
       </form>
       {!isWelcomeScreen && (
         <div className="mt-1 text-center text-sm font-normal text-black/60">
