@@ -75,14 +75,14 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
       />
       
       <form
-        className={`flex flex-col rounded-full overflow-hidden border border-zinc-200 bg-white shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px] ${isWelcomeScreen ? 'mx-4' : ''}`}
+        className={`flex flex-col rounded-[28px] overflow-hidden border border-zinc-200 bg-white shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px] ${isWelcomeScreen ? 'mx-4' : ''}`}
         onSubmit={(e) => {
           e.preventDefault();
           onSubmit(e);
         }}
       >
-        {/* 第一行：输入框和发送按钮 */}
-        <div className="flex items-center gap-2 px-4 pt-3">
+        {/* 第一行：只有输入框 */}
+        <div className={`flex items-center gap-2 px-4 ${selectedFunctions.length === 0 ? 'py-3' : 'pt-3'}`}>
           <div className="flex-1 flex items-center text-base text-black">
             <textarea
               name="input"
@@ -107,23 +107,10 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
               className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
             />
           </div>
-          <button
-            type="submit"
-            disabled={disabled || value.trim().length === 0}
-            className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${
-              disabled
-                ? 'bg-[#E5F3FF] text-[#0285FF]'
-                : value.trim().length === 0 
-                ? 'bg-zinc-100 text-black/60 cursor-not-allowed'
-                : 'bg-[#0285FF] text-white hover:bg-[#0264CC]'
-            }`}
-            aria-label="发送"
-          >
-            <ArrowUpIcon className="h-5 w-5" />
-          </button>
         </div>
 
-        {/* 第二行：加号、功能标签、语音按钮 */}
+        {/* 第二行：加号、功能标签、语音按钮、发送按钮 */}
+        {selectedFunctions.length > 0 && (
         <div className="flex items-center gap-2 px-4 pb-3">
           <button
             type="button"
@@ -138,7 +125,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
           {selectedFunctions.map((functionName) => (
             <div
               key={functionName}
-              className="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-2 py-1 rounded-md text-sm"
+              className="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-3 py-1.5 rounded-full text-sm"
             >
               <span>{functionName}</span>
               <button
@@ -162,7 +149,23 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
           >
             <MicrophoneIcon className="h-4 w-4 text-black" />
           </button>
+          
+          <button
+            type="submit"
+            disabled={disabled || value.trim().length === 0}
+            className={`inline-flex h-8 w-8 items-center justify-center rounded-full ${
+              disabled
+                ? 'bg-sky-100 text-sky-900 opacity-50'
+                : value.trim().length === 0 
+                ? 'bg-zinc-100 text-black/60 cursor-not-allowed'
+                : 'bg-sky-100 text-sky-900 hover:bg-sky-200'
+            }`}
+            aria-label="发送"
+          >
+            <ArrowUpIcon className="h-4 w-4" />
+          </button>
         </div>
+        )}
       </form>
       {!isWelcomeScreen && (
         <div className="mt-1 text-center text-sm font-normal text-black/60">
