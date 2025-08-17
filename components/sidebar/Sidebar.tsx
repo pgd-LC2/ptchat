@@ -106,7 +106,7 @@ export default function Sidebar({
       <div className="mx-2 my-1 border-t border-zinc-200"></div>
       
       {/* App Items */}
-      <div className="px-2 py-0 pb-4 space-y-0">
+      <div className="px-2 py-0 pb-8 space-y-0">
         <AppItem 
           icon={<SoraIcon className="h-6 w-6" />} 
           label="Sora" 
