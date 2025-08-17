@@ -101,7 +101,7 @@ export default function SearchModal({
         <div className="p-4">
           <div className="flex items-center gap-3">
             <div className="flex-1 flex items-center gap-3 rounded-md bg-zinc-50 px-4 py-3 focus-within:bg-zinc-100 transition-all">
-              <Search className="h-5 w-5 text-black/60" />
+              <Search className="h-5 w-5 text-black" />
               <input
                 type="text"
                 value={searchQuery}
@@ -117,7 +117,7 @@ export default function SearchModal({
               onClick={handleClose}
               aria-label="关闭"
             >
-              <X className="h-4 w-4" />
+              <X className="h-4 w-4 text-black" />
             </button>
           </div>
         </div>
@@ -130,7 +130,7 @@ export default function SearchModal({
             className="inline-flex items-center gap-3 rounded-md px-3 py-3 text-base font-normal text-black hover:bg-zinc-50 transition-colors w-full mb-3"
             onClick={handleNewChat}
           >
-            <PencilLine className="h-5 w-5 text-black/60" />
+            <PencilLine className="h-5 w-5 text-black" />
             新聊天
           </button>
 
@@ -148,7 +148,7 @@ export default function SearchModal({
               <div className="space-y-0">
                 {todaySessions.map((session) => (
                   <div key={session.id} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-zinc-50 transition-colors cursor-pointer text-base font-normal" onClick={() => handleChatSelect(session.id)}>
-                    <MessageCircle className="h-4 w-4 text-black/60 flex-shrink-0" />
+                    <MessageCircle className="h-4 w-4 text-black flex-shrink-0" />
                     <span className="text-base font-normal text-black truncate">{session.title}</span>
                   </div>
                 ))}
@@ -163,7 +163,7 @@ export default function SearchModal({
               <div className="space-y-0">
                 {yesterdaySessions.map((session) => (
                   <div key={session.id} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-zinc-50 transition-colors cursor-pointer text-base font-normal" onClick={() => handleChatSelect(session.id)}>
-                    <MessageCircle className="h-4 w-4 text-black/60 flex-shrink-0" />
+                    <MessageCircle className="h-4 w-4 text-black flex-shrink-0" />
                     <span className="text-base font-normal text-black truncate">{session.title}</span>
                   </div>
                 ))}
@@ -178,7 +178,7 @@ export default function SearchModal({
               <div className="space-y-0">
                 {olderSessions.map((session) => (
                   <div key={session.id} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-zinc-50 transition-colors cursor-pointer text-base font-normal" onClick={() => handleChatSelect(session.id)}>
-                    <MessageCircle className="h-4 w-4 text-black/60 flex-shrink-0" />
+                    <MessageCircle className="h-4 w-4 text-black flex-shrink-0" />
                     <span className="text-base font-normal text-black truncate">{session.title}</span>
                   </div>
                 ))}

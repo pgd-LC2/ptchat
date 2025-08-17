@@ -25,10 +25,10 @@ export default function SidebarHeader() {
       {/* 右侧更多按钮 */}
       <button
         type="button"
-        className="flex h-8 w-8 items-center justify-center rounded-md text-black/60 hover:bg-zinc-50"
+        className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-zinc-50"
         aria-label="更多选项"
       >
-        <MoreHorizontal className="h-4 w-4" />
+        <MoreHorizontal className="h-4 w-4 text-black" />
       </button>
     </div>
   );

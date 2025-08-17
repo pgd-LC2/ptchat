@@ -16,7 +16,7 @@ export default function UserProfileMenu() {
             <div className="text-sm font-normal text-black/60">Free</div>
           </div>
         </div>
-        <ChevronUp className="h-4 w-4 text-black/60" />
+        <ChevronUp className="h-4 w-4 text-black" />
       </button>
     </div>
   );
