@@ -118,17 +118,17 @@ export default function Sidebar({
       {/* App Items */}
       <div className="px-2 py-0 pb-8 space-y-0">
         <AppItem 
-          icon={<SoraIcon className="h-6 w-6" />} 
+          icon={<SoraIcon className="h-5 w-5" />} 
           label="Sora" 
           onClick={() => onAppSelect('Sora')}
         />
         <AppItem 
-          icon={<GPTIcon className="h-6 w-6" />} 
+          icon={<GPTIcon className="h-5 w-5" />} 
           label="GPT" 
           onClick={() => onAppSelect('GPT')}
         />
         <AppItem 
-          icon={<BoltIcon className="h-6 w-6" />} 
+          icon={<BoltIcon className="h-5 w-5" />} 
           label="Bolt Prompter" 
           onClick={() => onAppSelect('Bolt Prompter')}
         />
