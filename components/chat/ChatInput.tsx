@@ -73,85 +73,136 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
       />
       
       <form
-        className={`flex flex-col items-start gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-4 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 transition-all duration-300 ${selectedFunction ? 'py-3 min-h-[80px]' : 'py-3 min-h-[52px]'} ${isWelcomeScreen ? 'mx-4' : ''}`}
+        className={`flex flex-col overflow-hidden rounded-full border border-zinc-200 bg-white shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 transition-all duration-300 ${selectedFunction ? 'py-3 min-h-[80px]' : 'py-3 min-h-[52px]'} ${isWelcomeScreen ? 'mx-4' : ''}`}
         onSubmit={(e) => {
           e.preventDefault();
           onSubmit(e);
         }}
       >
-        <div className="flex items-center gap-2 w-full">
-          <button
-            type="button"
-            className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 flex-shrink-0 ${isWelcomeScreen ? 'bg-zinc-100' : ''}`}
-            aria-label="更多选项"
-            onClick={() => setIsMenuVisible(!isMenuVisible)}
-          >
-            <Plus className="h-5 w-5 text-black" />
-          </button>
-          
-          <div className="flex-1 flex items-center text-base text-black">
-            {selectedFunction && (
-              <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-full px-3 h-10 text-sm animate-fadeIn mr-3">
-                <selectedFunction.icon className="h-4 w-4 text-blue-600" />
-                <span className="text-blue-800 font-medium">{selectedFunction.label}</span>
-                <button
-                  type="button"
-                  className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full hover:bg-blue-200 transition-colors"
-                  onClick={() => setSelectedFunction(null)}
-                  aria-label="移除选择"
-                >
-                  <span className="text-blue-600 text-sm leading-none">×</span>
-                </button>
-              </div>
-            )}
-            <textarea
-              name="input"
-              value={value}
-              onChange={onChange}
-              placeholder={selectedFunction ? `使用${selectedFunction.label}功能...` : "询问任何问题"}
-              rows={selectedFunction ? 2 : 1}
-              onInput={(e) => {
-                const ta = e.currentTarget;
-                ta.style.height = 'auto';
-                ta.style.height = `${Math.min(ta.scrollHeight, selectedFunction ? 100 : 160)}px`;
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault();
-                  const form = e.currentTarget.form;
-                  if (form && e.currentTarget.value.trim().length > 0 && !disabled) {
-                    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-                  }
+        {/* 第一行：用户输入 */}
+        <div className="w-full px-4">
+          <textarea
+            name="input"
+            value={value}
+            onChange={onChange}
+            placeholder={selectedFunction ? `使用${selectedFunction.label}功能...` : "询问任何问题"}
+            rows={1}
+            onInput={(e) => {
+              const ta = e.currentTarget;
+              ta.style.height = 'auto';
+              ta.style.height = `${Math.min(ta.scrollHeight, 120)}px`;
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                const form = e.currentTarget.form;
+                if (form && e.currentTarget.value.trim().length > 0 && !disabled) {
+                  form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
                 }
-              }}
-              className={`w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal transition-all duration-300 ${selectedFunction ? 'min-h-[40px]' : ''}`}
-            />
-          </div>
-          
-          <button
-            type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-zinc-50 flex-shrink-0"
-            aria-label="语音"
-          >
-            <MicrophoneIcon className="h-5 w-5 text-black" />
-          </button>
-        
-          <button
-            type="submit"
-            disabled={disabled || value.trim().length === 0}
-            className={`inline-flex h-10 w-10 items-center justify-center rounded-full flex-shrink-0 ${
-              disabled
-                ? 'bg-[#E5F3FF] text-[#0285FF]'
-                : value.trim().length === 0 
-                ? 'bg-zinc-100 text-black/60 cursor-not-allowed'
-                : 'bg-[#0285FF] text-white hover:bg-[#0264CC]'
-            }`}
-            aria-label="发送"
-          >
-            <ArrowUpIcon className="h-5 w-5" />
-          </button>
+              }
+            }}
+            className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
+          />
         </div>
+
+        {/* 第二行：按钮和功能标签（仅在选择了功能时显示） */}
+        {selectedFunction && (
+          <div className="flex items-center gap-2 px-4 mt-1">
+            {/* 加号按钮 */}
+            <button
+              type="button"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 flex-shrink-0"
+              aria-label="更多选项"
+              onClick={() => setIsMenuVisible(!isMenuVisible)}
+            >
+              <Plus className="h-4 w-4 text-black" />
+            </button>
+            
+            {/* 功能标签 */}
+            <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-full px-3 h-8 text-sm animate-fadeIn">
+              <selectedFunction.icon className="h-4 w-4 text-blue-600" />
+              <span className="text-blue-800 font-medium">{selectedFunction.label}</span>
+              <button
+                type="button"
+                className="ml-1 inline-flex h-4 w-4 items-center justify-center rounded-full hover:bg-blue-200 transition-colors"
+                onClick={() => setSelectedFunction(null)}
+                aria-label="移除选择"
+              >
+                <span className="text-blue-600 text-xs leading-none">×</span>
+              </button>
+            </div>
+
+            {/* 竖线分割 */}
+            <div className="h-6 w-px bg-zinc-200 mx-2"></div>
+
+            {/* 右侧按钮组 */}
+            <div className="flex items-center gap-2 ml-auto">
+              <button
+                type="button"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full hover:bg-zinc-50 flex-shrink-0"
+                aria-label="语音"
+              >
+                <MicrophoneIcon className="h-4 w-4 text-black" />
+              </button>
+            
+              <button
+                type="submit"
+                disabled={disabled || value.trim().length === 0}
+                className={`inline-flex h-8 w-8 items-center justify-center rounded-full flex-shrink-0 ${
+                  disabled
+                    ? 'bg-[#E5F3FF] text-[#0285FF]'
+                    : value.trim().length === 0 
+                    ? 'bg-zinc-100 text-black/60 cursor-not-allowed'
+                    : 'bg-[#0285FF] text-white hover:bg-[#0264CC]'
+                }`}
+                aria-label="发送"
+              >
+                <ArrowUpIcon className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* 没有选择功能时的单行布局 */}
+        {!selectedFunction && (
+          <div className="flex items-center gap-2 px-4 -mt-3">
+            <button
+              type="button"
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 flex-shrink-0 ${isWelcomeScreen ? 'bg-zinc-100' : ''}`}
+              aria-label="更多选项"
+              onClick={() => setIsMenuVisible(!isMenuVisible)}
+            >
+              <Plus className="h-5 w-5 text-black" />
+            </button>
+            
+            <div className="flex-1"></div>
+            
+            <button
+              type="button"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-zinc-50 flex-shrink-0"
+              aria-label="语音"
+            >
+              <MicrophoneIcon className="h-5 w-5 text-black" />
+            </button>
+          
+            <button
+              type="submit"
+              disabled={disabled || value.trim().length === 0}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full flex-shrink-0 ${
+                disabled
+                  ? 'bg-[#E5F3FF] text-[#0285FF]'
+                  : value.trim().length === 0 
+                  ? 'bg-zinc-100 text-black/60 cursor-not-allowed'
+                  : 'bg-[#0285FF] text-white hover:bg-[#0264CC]'
+              }`}
+              aria-label="发送"
+            >
+              <ArrowUpIcon className="h-5 w-5" />
+            </button>
+          </div>
+        )}
       </form>
+      
       {!isWelcomeScreen && (
         <div className="mt-1 text-center text-sm font-normal text-black/60">
           按 Enter 发送，Shift+Enter 换行
