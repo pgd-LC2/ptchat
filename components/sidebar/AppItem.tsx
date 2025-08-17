@@ -25,4 +25,3 @@ export default function AppItem({ icon, label, active, onClick }: Props) {
     </button>
   );
 }
-}
