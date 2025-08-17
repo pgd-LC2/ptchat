@@ -91,16 +91,16 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
           
           <div className="flex-1 flex items-center text-base text-black">
             {selectedFunction && (
-              <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-full px-3 py-1.5 text-sm animate-fadeIn mr-3">
+              <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-full px-3 h-10 text-sm animate-fadeIn mr-3">
                 <selectedFunction.icon className="h-4 w-4 text-blue-600" />
                 <span className="text-blue-800 font-medium">{selectedFunction.label}</span>
                 <button
                   type="button"
-                  className="ml-1 inline-flex h-4 w-4 items-center justify-center rounded-full hover:bg-blue-200 transition-colors"
+                  className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full hover:bg-blue-200 transition-colors"
                   onClick={() => setSelectedFunction(null)}
                   aria-label="移除选择"
                 >
-                  <span className="text-blue-600 text-xs leading-none">×</span>
+                  <span className="text-blue-600 text-sm leading-none">×</span>
                 </button>
               </div>
             )}
