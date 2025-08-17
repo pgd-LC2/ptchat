@@ -14,6 +14,8 @@ function CustomLogo({ className }: { className?: string }) {
 }
 
 export default function SidebarHeader() {
+    }
+  )
   return (
     <div className="flex items-center justify-between px-2 py-3">
       {/* 左侧Logo */}
