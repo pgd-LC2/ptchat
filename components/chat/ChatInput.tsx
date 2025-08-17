@@ -42,16 +42,23 @@ function ArrowUpIcon({ className }: { className?: string }) {
   );
 }
 
+type SelectedFunction = {
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+} | null;
+
 type Props = {
   className?: string;
   value: string;
   disabled?: boolean;
   isWelcomeScreen?: boolean;
+  selectedFunction: SelectedFunction;
+  setSelectedFunction: (func: SelectedFunction) => void;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
-export default function ChatInput({ className, value, disabled, isWelcomeScreen = false, onChange, onSubmit }: Props) {
+export default function ChatInput({ className, value, disabled, isWelcomeScreen = false, selectedFunction, setSelectedFunction, onChange, onSubmit }: Props) {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   return (
@@ -59,69 +66,92 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
       <InputMenu 
         isVisible={isMenuVisible} 
         onClose={() => setIsMenuVisible(false)} 
+        onSelectFunction={(func) => {
+          setSelectedFunction(func);
+          setIsMenuVisible(false);
+        }}
       />
       
       <form
-        className={`flex items-center gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-4 py-3 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px] ${isWelcomeScreen ? 'mx-4' : ''}`}
+        className={`flex flex-col items-start gap-2 rounded-full overflow-hidden border border-zinc-200 bg-white px-4 py-3 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 transition-all duration-300 ${selectedFunction ? 'rounded-2xl pb-4' : 'min-h-[52px]'} ${isWelcomeScreen ? 'mx-4' : ''}`}
         onSubmit={(e) => {
           e.preventDefault();
           onSubmit(e);
         }}
       >
-        <button
-          type="button"
-          className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 ${isWelcomeScreen ? 'bg-zinc-100' : ''}`}
-          aria-label="更多选项"
-          onClick={() => setIsMenuVisible(!isMenuVisible)}
-        >
-          <Plus className="h-5 w-5 text-black" />
-        </button>
-        
-        <div className="flex-1 flex items-center text-base text-black">
-          <textarea
-            name="input"
-            value={value}
-            onChange={onChange}
-            placeholder="询问任何问题"
-            rows={1}
-            onInput={(e) => {
-              const ta = e.currentTarget;
-              ta.style.height = 'auto';
-              ta.style.height = `${Math.min(ta.scrollHeight, 160)}px`;
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                const form = e.currentTarget.form;
-                if (form && e.currentTarget.value.trim().length > 0 && !disabled) {
-                  form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+        <div className="flex items-center gap-2 w-full">
+          <button
+            type="button"
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 flex-shrink-0 ${isWelcomeScreen ? 'bg-zinc-100' : ''}`}
+            aria-label="更多选项"
+            onClick={() => setIsMenuVisible(!isMenuVisible)}
+          >
+            <Plus className="h-5 w-5 text-black" />
+          </button>
+          
+          {selectedFunction && (
+            <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-full px-3 py-1.5 text-sm animate-fadeIn">
+              <selectedFunction.icon className="h-4 w-4 text-blue-600" />
+              <span className="text-blue-800 font-medium">{selectedFunction.label}</span>
+              <button
+                type="button"
+                className="ml-1 inline-flex h-4 w-4 items-center justify-center rounded-full hover:bg-blue-200 transition-colors"
+                onClick={() => setSelectedFunction(null)}
+                aria-label="移除选择"
+              >
+                <span className="text-blue-600 text-xs leading-none">×</span>
+              </button>
+            </div>
+          )}
+          
+          <div className="flex-1 flex items-center text-base text-black">
+            <textarea
+              name="input"
+              value={value}
+              onChange={onChange}
+              placeholder={selectedFunction ? `使用${selectedFunction.label}功能...` : "询问任何问题"}
+              rows={1}
+              onInput={(e) => {
+                const ta = e.currentTarget;
+                ta.style.height = 'auto';
+                ta.style.height = `${Math.min(ta.scrollHeight, 160)}px`;
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  const form = e.currentTarget.form;
+                  if (form && e.currentTarget.value.trim().length > 0 && !disabled) {
+                    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+                  }
                 }
-              }
-            }}
-            className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
-          />
+              }}
+              className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
+            />
+          </div>
+          
+          <button
+            type="button"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-zinc-50 flex-shrink-0"
+            aria-label="语音"
+          >
+            <MicrophoneIcon className="h-5 w-5 text-black" />
+          </button>
+        
+          <button
+            type="submit"
+            disabled={disabled || value.trim().length === 0}
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-full flex-shrink-0 ${
+              disabled
+                ? 'bg-[#E5F3FF] text-[#0285FF]'
+                : value.trim().length === 0 
+                ? 'bg-zinc-100 text-black/60 cursor-not-allowed'
+                : 'bg-[#0285FF] text-white hover:bg-[#0264CC]'
+            }`}
+            aria-label="发送"
+          >
+            <ArrowUpIcon className="h-5 w-5" />
+          </button>
         </div>
-        <button
-          type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-zinc-50"
-          aria-label="语音"
-        >
-          <MicrophoneIcon className="h-5 w-5 text-black" />
-        </button>
-        <button
-          type="submit"
-          disabled={disabled || value.trim().length === 0}
-          className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${
-            disabled
-              ? 'bg-[#E5F3FF] text-[#0285FF]'
-              : value.trim().length === 0 
-              ? 'bg-zinc-100 text-black/60 cursor-not-allowed'
-              : 'bg-[#0285FF] text-white hover:bg-[#0264CC]'
-          }`}
-          aria-label="发送"
-        >
-          <ArrowUpIcon className="h-5 w-5" />
-        </button>
       </form>
       {!isWelcomeScreen && (
         <div className="mt-1 text-center text-sm font-normal text-black/60">
