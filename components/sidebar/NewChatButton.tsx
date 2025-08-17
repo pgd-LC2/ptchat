@@ -23,7 +23,7 @@ export default function NewChatButton({ className, onClick }: Props) {
   return (
     <button
       type="button"
-      className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-normal text-black hover:bg-zinc-50 transition-colors w-full ${className || ''}`}
+      className={`inline-flex items-center gap-3 rounded-lg px-3 py-2 text-base font-normal text-black hover:bg-zinc-50 transition-colors w-full ${className || ''}`}
       onClick={onClick}
     >
       <NewChatIcon className="h-5 w-5 text-black" />
