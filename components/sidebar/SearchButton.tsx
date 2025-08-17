@@ -25,7 +25,7 @@ export default function SearchButton({ onClick }: Props) {
       className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-base font-normal text-black hover:bg-zinc-50 transition-colors"
       onClick={onClick}
     >
-      <SearchIcon className="h-5 w-5 text-black/60" />
+      <SearchIcon className="h-5 w-5 text-black" />
       <span>搜索聊天</span>
     </button>
   );

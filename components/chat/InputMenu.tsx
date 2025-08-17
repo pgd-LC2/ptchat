@@ -69,7 +69,7 @@ export default function InputMenu({ isVisible, onClose }: Props) {
                   }
                 }}
               >
-                <item.icon className={`h-5 w-5 ${item.disabled ? 'text-black/60' : 'text-black/60'}`} />
+                <item.icon className={`h-5 w-5 ${item.disabled ? 'text-black/60' : 'text-black'}`} />
                 <div className="flex-1">
                   <div className={`text-base font-normal ${item.disabled ? 'text-black/60' : 'text-black'}`}>
                     {item.label}
@@ -99,9 +99,9 @@ export default function InputMenu({ isVisible, onClose }: Props) {
               onClose();
             }}
           >
-            <MoreHorizontal className="h-5 w-5 text-black/60" />
+            <MoreHorizontal className="h-5 w-5 text-black" />
             <div className="flex-1 text-base font-normal text-black">更多</div>
-            <ChevronRight className="h-4 w-4 text-black/60" />
+            <ChevronRight className="h-4 w-4 text-black" />
           </button>
         </div>
       </div>

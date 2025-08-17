@@ -74,7 +74,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
           aria-label="更多选项"
           onClick={() => setIsMenuVisible(!isMenuVisible)}
         >
-          <Plus className="h-5 w-5" />
+          <Plus className="h-5 w-5 text-black" />
         </button>
         
         <div className="flex-1 flex items-center text-base text-black">
@@ -103,10 +103,10 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
         </div>
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-zinc-50"
           aria-label="语音"
         >
-          <MicrophoneIcon className="h-5 w-5" />
+          <MicrophoneIcon className="h-5 w-5 text-black" />
         </button>
         <button
           type="submit"
