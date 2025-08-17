@@ -101,18 +101,10 @@ export default function Sidebar({
       {/* Header with logo and more button */}
       <SidebarHeader />
       
-      {/* New Chat Button */}
-      <div className="px-2">
+      {/* 主要按钮组 */}
+      <div className="px-2 space-y-1">
         <NewChatButton onClick={onNewChat} />
-      </div>
-      
-      {/* Search Input */}
-      <div className="px-2">
         <SearchButton onClick={onOpenSearchModal} />
-      </div>
-      
-      {/* Library button */}
-      <div className="px-2">
         <AppItem 
           icon={<LibraryIcon className="h-5 w-5" />} 
           label="库" 
