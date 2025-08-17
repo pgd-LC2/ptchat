@@ -19,7 +19,7 @@ export default function SidebarHeader() {
     <div className="flex items-center justify-between px-2 py-3">
       {/* 左侧Logo */}
       <div className="flex h-8 w-8 items-center justify-center ml-2">
-        <CustomLogo className="h-7 w-7 text-black" />
+        <CustomLogo className="h-8 w-8 text-black" />
       </div>
       
       {/* 右侧更多按钮 */}
