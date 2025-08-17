@@ -10,22 +10,15 @@ export type ChatMessage = {
   content: string;
 };
 
-type SelectedFunction = {
-  label: string;
-  icon: React.ComponentType<{ className?: string }>;
-} | null;
-
 type Props = {
   messages: ChatMessage[];
   input: string;
   isLoading: boolean;
-  selectedFunction: SelectedFunction;
-  setSelectedFunction: (func: SelectedFunction) => void;
   onInputChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
-export default function ChatView({ messages, input, isLoading, selectedFunction, setSelectedFunction, onInputChange, onSubmit }: Props) {
+export default function ChatView({ messages, input, isLoading, onInputChange, onSubmit }: Props) {
   const hasMessages = messages.length > 0;
   return (
     <div className="flex min-h-screen flex-col">
@@ -43,22 +36,13 @@ export default function ChatView({ messages, input, isLoading, selectedFunction,
             </div>
           </div>
           <div className="sticky bottom-0 bg-[#F7F7F8]/80 backdrop-blur supports-[backdrop-filter]:bg-[#F7F7F8]/60">
-            <ChatInput 
-              value={input} 
-              disabled={isLoading} 
-              selectedFunction={selectedFunction}
-              setSelectedFunction={setSelectedFunction}
-              onChange={onInputChange} 
-              onSubmit={onSubmit} 
-            />
+            <ChatInput value={input} disabled={isLoading} onChange={onInputChange} onSubmit={onSubmit} />
           </div>
         </>
       ) : (
         <WelcomeScreen
           input={input}
           isLoading={isLoading}
-          selectedFunction={selectedFunction}
-          setSelectedFunction={setSelectedFunction}
           onInputChange={onInputChange}
           onSubmit={onSubmit}
           className="flex-1"

@@ -12,11 +12,6 @@ type ChatSession = {
   lastActivity: Date;
 };
 
-type SelectedFunction = {
-  label: string;
-  icon: React.ComponentType<{ className?: string }>;
-} | null;
-
 export default function HomePage() {
   const [chatSessions, setChatSessions] = useState<ChatSession[]>([
     {
@@ -42,7 +37,6 @@ export default function HomePage() {
   const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedFunction, setSelectedFunction] = useState<SelectedFunction>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const currentMessages = currentChatId 
@@ -64,7 +58,6 @@ export default function HomePage() {
     setChatSessions(prev => [newChat, ...prev]);
     setCurrentChatId(newChat.id);
     setInput('');
-    setSelectedFunction(null);
   }, []);
 
   const handleChatSelect = useCallback((chatId: string) => {
@@ -154,7 +147,6 @@ export default function HomePage() {
         )
       );
       setInput('');
-      setSelectedFunction(null);
       setIsLoading(true);
 
       const responseText =
@@ -195,8 +187,6 @@ export default function HomePage() {
           messages={currentMessages}
           input={input}
           isLoading={isLoading}
-          selectedFunction={selectedFunction}
-          setSelectedFunction={setSelectedFunction}
           onInputChange={handleInputChange}
           onSubmit={handleSubmit}
         />

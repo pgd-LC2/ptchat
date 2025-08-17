@@ -5,10 +5,9 @@ import { Paperclip, Book, Image, Lightbulb, Telescope, MoreHorizontal, ChevronRi
 type Props = {
   isVisible: boolean;
   onClose: () => void;
-  onSelectFunction: (func: { label: string; icon: React.ComponentType<{ className?: string }> }) => void;
 };
 
-export default function InputMenu({ isVisible, onClose, onSelectFunction }: Props) {
+export default function InputMenu({ isVisible, onClose }: Props) {
   if (!isVisible) return null;
 
   const menuItems = [
@@ -64,10 +63,8 @@ export default function InputMenu({ isVisible, onClose, onSelectFunction }: Prop
                 }`}
                 onClick={() => {
                   if (!item.disabled) {
-                    onSelectFunction({
-                      label: item.label,
-                      icon: item.icon
-                    });
+                    // 这里可以添加具体的功能
+                    console.log(`Clicked: ${item.label}`);
                     onClose();
                   }
                 }}
