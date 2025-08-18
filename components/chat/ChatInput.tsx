@@ -137,7 +137,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
                     }
                   }
                 }}
-                className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-0 text-base font-normal"
+                className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-0.5 text-base font-normal"
               />
             </div>
             
