@@ -81,25 +81,35 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
       >
         {selectedFeature ? (
           <>
-            {/* 功能标签行 */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium text-blue-600">
-                  {selectedFeature}
-                </span>
-              </div>
-              <button
-                type="button"
-                className="text-black/60 hover:text-black text-sm"
-                onClick={handleClearFeature}
-              >
-                ✕
-              </button>
+            {/* 第一行：纯输入框 */}
+            <div className="w-full">
+              <textarea
+                name="input"
+                value={value}
+                onChange={onChange}
+                placeholder="询问任何问题"
+                rows={1}
+                onInput={(e) => {
+                  const ta = e.currentTarget;
+                  ta.style.height = 'auto';
+                  ta.style.height = `${Math.min(ta.scrollHeight, 160)}px`;
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    const form = e.currentTarget.form;
+                    if (form && e.currentTarget.value.trim().length > 0 && !disabled) {
+                      form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+                    }
+                  }
+                }}
+                className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
+              />
             </div>
             
-            {/* 输入框和按钮行 */}
+            {/* 第二行：加号 功能标签+关闭按钮 语音 发送 */}
             <div className="flex items-center gap-2">
-              {/* 左侧加号按钮 */}
+              {/* 加号最左边 */}
               <button
                 type="button"
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 flex-shrink-0"
@@ -109,33 +119,21 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
                 <Plus className="h-5 w-5 text-black" />
               </button>
               
-              {/* 中间输入框 */}
-              <div className="flex-1">
-                <textarea
-                  name="input"
-                  value={value}
-                  onChange={onChange}
-                  placeholder="询问任何问题"
-                  rows={1}
-                  onInput={(e) => {
-                    const ta = e.currentTarget;
-                    ta.style.height = 'auto';
-                    ta.style.height = `${Math.min(ta.scrollHeight, 160)}px`;
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                      e.preventDefault();
-                      const form = e.currentTarget.form;
-                      if (form && e.currentTarget.value.trim().length > 0 && !disabled) {
-                        form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-                      }
-                    }
-                  }}
-                  className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
-                />
+              {/* 功能标签+关闭按钮 */}
+              <div className="flex-1 flex items-center gap-2">
+                <span className="text-sm font-medium text-blue-600">
+                  {selectedFeature}
+                </span>
+                <button
+                  type="button"
+                  className="text-black/60 hover:text-black text-sm"
+                  onClick={handleClearFeature}
+                >
+                  ✕
+                </button>
               </div>
               
-              {/* 右侧按钮组 */}
+              {/* 语音和发送按钮 */}
               <div className="flex items-center gap-2 flex-shrink-0">
                 <button
                   type="button"
