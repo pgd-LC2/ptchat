@@ -65,9 +65,7 @@ export default function InputMenu({ isVisible, onClose, onFeatureSelect }: Props
                 }`}
                 onClick={() => {
                   if (!item.disabled) {
-                    // 这里可以添加具体的功能
-                    console.log(`Clicked: ${item.label}`);
-                    onClose();
+                    onFeatureSelect(item.label);
                   }
                 }}
               >

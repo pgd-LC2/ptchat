@@ -98,7 +98,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
         )}
         
         {/* 输入框行 */}
-        <div className={`${selectedFeature ? 'w-full' : 'flex-1'} flex items-center text-base text-black`}>
+        <div className="flex-1 flex items-center text-base text-black">
           <textarea
             name="input"
             value={value}
@@ -124,9 +124,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
         </div>
 
         {/* 按钮行 */}
-        <div className={`flex items-center ${selectedFeature ? 'justify-between' : 'gap-2'}`}>
-          {!selectedFeature && <div className="flex-1" />}
-          
+        <div className="flex items-center gap-2">
           <div className="flex items-center gap-2">
             <button
               type="button"
