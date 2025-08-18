@@ -53,31 +53,52 @@ type Props = {
 
 export default function ChatInput({ className, value, disabled, isWelcomeScreen = false, onChange, onSubmit }: Props) {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
+
+  const handleFeatureSelect = (feature: string) => {
+    setSelectedFeature(feature);
+    setIsMenuVisible(false);
+  };
+
+  const handleClearFeature = () => {
+    setSelectedFeature(null);
+  };
 
   return (
     <div className={`relative w-full mx-auto ${isWelcomeScreen ? 'max-w-[720px]' : 'max-w-[720px] pb-3 px-6'} ${className || ''}`}>
       <InputMenu 
         isVisible={isMenuVisible} 
-        onClose={() => setIsMenuVisible(false)} 
+        onClose={() => setIsMenuVisible(false)}
+        onFeatureSelect={handleFeatureSelect}
       />
       
       <form
-        className={`flex items-center gap-2 rounded-[40px] overflow-hidden border border-zinc-200 bg-white px-4 py-3 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[52px] ${isWelcomeScreen ? 'mx-4' : ''}`}
+        className={`${selectedFeature ? 'flex flex-col gap-3' : 'flex items-center gap-2'} rounded-[40px] overflow-hidden border border-zinc-200 bg-white px-4 py-3 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 ${selectedFeature ? 'min-h-[100px]' : 'min-h-[52px]'} ${isWelcomeScreen ? 'mx-4' : ''}`}
         onSubmit={(e) => {
           e.preventDefault();
           onSubmit(e);
         }}
       >
-        <button
-          type="button"
-          className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 ${isWelcomeScreen ? 'bg-zinc-100' : ''}`}
-          aria-label="更多选项"
-          onClick={() => setIsMenuVisible(!isMenuVisible)}
-        >
-          <Plus className="h-5 w-5 text-black" />
-        </button>
+        {/* 功能标签行 */}
+        {selectedFeature && (
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-blue-600">
+                {selectedFeature}
+              </span>
+            </div>
+            <button
+              type="button"
+              className="text-black/60 hover:text-black text-sm"
+              onClick={handleClearFeature}
+            >
+              ✕
+            </button>
+          </div>
+        )}
         
-        <div className="flex-1 flex items-center text-base text-black">
+        {/* 输入框行 */}
+        <div className={`${selectedFeature ? 'w-full' : 'flex-1'} flex items-center text-base text-black`}>
           <textarea
             name="input"
             value={value}
@@ -101,27 +122,43 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
             className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
           />
         </div>
-        <button
-          type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-24px hover:bg-zinc-50"
-          aria-label="语音"
-        >
-          <MicrophoneIcon className="h-5 w-5 text-black" />
-        </button>
-        <button
-          type="submit"
-          disabled={disabled || value.trim().length === 0}
-          className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${
-            disabled
-              ? 'bg-[#E5F3FF] text-[#0285FF]'
-              : value.trim().length === 0 
-              ? 'bg-zinc-100 text-black/60 cursor-not-allowed'
-              : 'bg-[#0285FF] text-white hover:bg-[#0264CC]'
-          }`}
-          aria-label="发送"
-        >
-          <ArrowUpIcon className="h-5 w-5" />
-        </button>
+
+        {/* 按钮行 */}
+        <div className={`flex items-center ${selectedFeature ? 'justify-between' : 'gap-2'}`}>
+          {!selectedFeature && <div className="flex-1" />}
+          
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 ${isWelcomeScreen && !selectedFeature ? 'bg-zinc-100' : ''}`}
+              aria-label="更多选项"
+              onClick={() => setIsMenuVisible(!isMenuVisible)}
+            >
+              <Plus className="h-5 w-5 text-black" />
+            </button>
+            <button
+              type="button"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-24px hover:bg-zinc-50"
+              aria-label="语音"
+            >
+              <MicrophoneIcon className="h-5 w-5 text-black" />
+            </button>
+            <button
+              type="submit"
+              disabled={disabled || value.trim().length === 0}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${
+                disabled
+                  ? 'bg-[#E5F3FF] text-[#0285FF]'
+                  : value.trim().length === 0 
+                  ? 'bg-zinc-100 text-black/60 cursor-not-allowed'
+                  : 'bg-[#0285FF] text-white hover:bg-[#0264CC]'
+              }`}
+              aria-label="发送"
+            >
+              <ArrowUpIcon className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
       </form>
       {!isWelcomeScreen && (
         <div className="mt-1 text-center text-sm font-normal text-black/60">

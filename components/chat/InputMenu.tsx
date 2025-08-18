@@ -5,9 +5,10 @@ import { Paperclip, Book, Image, Lightbulb, Telescope, MoreHorizontal, ChevronRi
 type Props = {
   isVisible: boolean;
   onClose: () => void;
+  onFeatureSelect: (feature: string) => void;
 };
 
-export default function InputMenu({ isVisible, onClose }: Props) {
+export default function InputMenu({ isVisible, onClose, onFeatureSelect }: Props) {
   if (!isVisible) return null;
 
   const menuItems = [
@@ -96,9 +97,9 @@ export default function InputMenu({ isVisible, onClose }: Props) {
             className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-left text-black hover:bg-zinc-50 transition-colors"
             onClick={() => {
               console.log('Clicked: 更多');
-              onClose();
+              onFeatureSelect('更多');
             }}
-          >
+                onFeatureSelect(item.label);
             <MoreHorizontal className="h-5 w-5 text-black" />
             <div className="flex-1 text-base font-normal text-black">更多</div>
             <ChevronRight className="h-4 w-4 text-black" />
