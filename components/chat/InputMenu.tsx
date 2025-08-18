@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { Paperclip, Book, Image, Lightbulb, Telescope, MoreHorizontal, ChevronRight } from 'lucide-react';
 
 type Props = {
@@ -42,7 +43,7 @@ export default function InputMenu({ isVisible, onClose, onFeatureSelect }: Props
 
 
   return (
-    <>
+    <React.Fragment>
       {/* 背景遮罩 */}
       <div 
         className="fixed inset-0 z-10"
@@ -106,6 +107,6 @@ export default function InputMenu({ isVisible, onClose, onFeatureSelect }: Props
           </button>
         </div>
       </div>
-    </>
+    </React.Fragment>
   );
 }
