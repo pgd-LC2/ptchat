@@ -103,7 +103,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
         </div>
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-48px hover:bg-zinc-50"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-24px hover:bg-zinc-50"
           aria-label="语音"
         >
           <MicrophoneIcon className="h-5 w-5 text-black" />
