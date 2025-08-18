@@ -97,46 +97,49 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
           </div>
         )}
         
-        {/* 输入框行 */}
-        <div className="flex-1 flex items-center text-base text-black">
-          <textarea
-            name="input"
-            value={value}
-            onChange={onChange}
-            placeholder="询问任何问题"
-            rows={1}
-            onInput={(e) => {
-              const ta = e.currentTarget;
-              ta.style.height = 'auto';
-              ta.style.height = `${Math.min(ta.scrollHeight, 160)}px`;
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                const form = e.currentTarget.form;
-                if (form && e.currentTarget.value.trim().length > 0 && !disabled) {
-                  form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-                }
-              }
-            }}
-            className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
-          />
-        </div>
-
-        {/* 按钮行 */}
+        {/* 输入框和按钮行 */}
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-2">
+          {/* 左侧加号按钮 */}
+          <button
+            type="button"
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 flex-shrink-0 ${isWelcomeScreen && !selectedFeature ? 'bg-zinc-100' : ''}`}
+            aria-label="更多选项"
+            onClick={() => setIsMenuVisible(!isMenuVisible)}
+          >
+            <Plus className="h-5 w-5 text-black" />
+          </button>
+          
+          {/* 中间输入框 */}
+          <div className="flex-1">
+            <textarea
+              name="input"
+              value={value}
+              onChange={onChange}
+              placeholder="询问任何问题"
+              rows={1}
+              onInput={(e) => {
+                const ta = e.currentTarget;
+                ta.style.height = 'auto';
+                ta.style.height = `${Math.min(ta.scrollHeight, 160)}px`;
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  const form = e.currentTarget.form;
+                  if (form && e.currentTarget.value.trim().length > 0 && !disabled) {
+                    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+                  }
+                }
+              }}
+              className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
+            />
+          </div>
+          
+          {/* 右侧按钮组 */}
+          <div className="flex items-center gap-2 flex-shrink-0">
             <button
               type="button"
-              className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 ${isWelcomeScreen && !selectedFeature ? 'bg-zinc-100' : ''}`}
-              aria-label="更多选项"
-              onClick={() => setIsMenuVisible(!isMenuVisible)}
-            >
-              <Plus className="h-5 w-5 text-black" />
-            </button>
-            <button
-              type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-24px hover:bg-zinc-50"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-zinc-50"
               aria-label="语音"
             >
               <MicrophoneIcon className="h-5 w-5 text-black" />
