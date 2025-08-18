@@ -206,7 +206,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
             {/* 左侧加号按钮 */}
             <button
               type="button"
-              className={`inline-flex h-9 w-9 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 flex-shrink-0 ${isWelcomeScreen ? 'bg-zinc-100' : ''}`}
+             className="inline-flex h-9 w-9 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 flex-shrink-0"
               aria-label="更多选项"
               onClick={() => setIsMenuVisible(!isMenuVisible)}
             >
