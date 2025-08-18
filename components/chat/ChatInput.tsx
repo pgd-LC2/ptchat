@@ -65,7 +65,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
   };
 
   return (
-    <div className={`relative w-full mx-auto ${isWelcomeScreen ? 'max-w-[720px]' : 'max-w-[720px] pb-3 px-6'} ${className || ''}`}>
+    <div className={`relative w-full mx-auto ${isWelcomeScreen ? 'max-w-[820px]' : 'max-w-[720px] pb-3 px-6'} ${className || ''}`}>
       <InputMenu 
         isVisible={isMenuVisible} 
         onClose={() => setIsMenuVisible(false)}
