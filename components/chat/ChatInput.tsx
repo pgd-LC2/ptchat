@@ -116,7 +116,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
         {selectedFeature ? (
           <>
             {/* 第一行：纯输入框 */}
-            <div className="w-full pl-1">
+            <div className="w-full pl-3 flex items-center">
               <textarea
                 name="input"
                 value={value}
@@ -137,7 +137,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
                     }
                   }
                 }}
-                className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
+                className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-0 text-base font-normal"
               />
             </div>
             
@@ -214,7 +214,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
             </button>
             
             {/* 中间输入框 */}
-            <div className="flex-1">
+            <div className="flex-1 flex items-center">
               <textarea
                 name="input"
                 value={value}
@@ -235,7 +235,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
                     }
                   }
                 }}
-                className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
+                className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-0 text-base font-normal"
               />
             </div>
             
