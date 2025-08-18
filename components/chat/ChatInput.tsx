@@ -154,7 +154,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
               </button>
               
               {/* 功能标签+关闭按钮 */}
-              <div className="flex-1 flex items-center gap-2 px-3 py-1 rounded-full hover:bg-[#CCE6FF] transition-colors">
+              <div className="flex items-center gap-2 px-3 py-1 rounded-full hover:bg-[#CCE6FF] transition-colors">
                 {featureDisplay && (
                   <>
                     <featureDisplay.icon className="h-4 w-4 text-[#0285FF]" />
@@ -171,6 +171,9 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
                   ✕
                 </button>
               </div>
+              
+              {/* 占位符让语音和发送靠右 */}
+              <div className="flex-1"></div>
               
               {/* 语音和发送按钮 */}
               <div className="flex items-center gap-2 flex-shrink-0">
