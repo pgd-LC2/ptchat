@@ -121,12 +121,12 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
               
               {/* 功能标签+关闭按钮 */}
               <div className="flex-1 flex items-center gap-2">
-                <span className="text-sm font-medium text-blue-600">
+                <span className="text-sm font-medium text-[#0285FF]">
                   {selectedFeature}
                 </span>
                 <button
                   type="button"
-                  className="text-black/60 hover:text-black text-sm"
+                  className="text-[#0285FF] hover:text-[#0264CC] text-sm"
                   onClick={handleClearFeature}
                 >
                   ✕
