@@ -116,7 +116,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
         {selectedFeature ? (
           <>
             {/* 第一行：纯输入框 */}
-            <div className="w-full pl-3">
+            <div className="w-full pl-1">
               <textarea
                 name="input"
                 value={value}
