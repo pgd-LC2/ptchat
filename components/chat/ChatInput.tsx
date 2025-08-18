@@ -108,6 +108,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
       
       <form
         className={`${selectedFeature ? 'flex flex-col gap-3' : 'flex items-center gap-2'} rounded-[28px] overflow-hidden border border-zinc-200 bg-white px-4 py-3 shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 ${selectedFeature ? 'min-h-[100px]' : 'min-h-[28px]'} ${isWelcomeScreen ? 'mx-4' : ''}`}
+        className={`${selectedFeature ? 'flex flex-col gap-3' : 'flex items-center gap-2'} rounded-[28px] overflow-hidden border border-zinc-200 bg-white shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[56px] max-h-[208px] ${isWelcomeScreen ? 'mx-4' : ''} ${selectedFeature ? 'px-2.5 py-2.5' : 'px-2.5 py-2.5'}`}
         onSubmit={(e) => {
           e.preventDefault();
           onSubmit(e);
@@ -146,7 +147,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
               {/* 加号最左边 */}
               <button
                 type="button"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 flex-shrink-0"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 flex-shrink-0"
                 aria-label="更多选项"
                 onClick={() => setIsMenuVisible(!isMenuVisible)}
               >
@@ -179,7 +180,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
               <div className="flex items-center gap-2 flex-shrink-0">
                 <button
                   type="button"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-zinc-50"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full hover:bg-zinc-50"
                   aria-label="语音"
                 >
                   <MicrophoneIcon className="h-5 w-5 text-black" />
@@ -187,7 +188,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
                 <button
                   type="submit"
                   disabled={disabled || value.trim().length === 0}
-                  className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${
+                  className={`inline-flex h-9 w-9 items-center justify-center rounded-full ${
                     disabled
                       ? 'bg-[#E5F3FF] text-[#0285FF]'
                       : value.trim().length === 0 
@@ -206,7 +207,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
             {/* 左侧加号按钮 */}
             <button
               type="button"
-              className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 flex-shrink-0 ${isWelcomeScreen ? 'bg-zinc-100' : ''}`}
+              className={`inline-flex h-9 w-9 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 flex-shrink-0 ${isWelcomeScreen ? 'bg-zinc-100' : ''}`}
               aria-label="更多选项"
               onClick={() => setIsMenuVisible(!isMenuVisible)}
             >
@@ -242,7 +243,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
             {/* 语音按钮 */}
             <button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-zinc-50 flex-shrink-0"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full hover:bg-zinc-50 flex-shrink-0"
               aria-label="语音"
             >
               <MicrophoneIcon className="h-5 w-5 text-black" />
@@ -252,7 +253,7 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
             <button
               type="submit"
               disabled={disabled || value.trim().length === 0}
-              className={`inline-flex h-10 w-10 items-center justify-center rounded-full flex-shrink-0 ${
+              className={`inline-flex h-9 w-9 items-center justify-center rounded-full flex-shrink-0 ${
                 disabled
                   ? 'bg-[#E5F3FF] text-[#0285FF]'
                   : value.trim().length === 0 
