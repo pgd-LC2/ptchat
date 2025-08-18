@@ -79,75 +79,140 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
           onSubmit(e);
         }}
       >
-        {/* 功能标签行 */}
-        {selectedFeature && (
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-blue-600">
-                {selectedFeature}
-              </span>
+        {selectedFeature ? (
+          <>
+            {/* 功能标签行 */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-blue-600">
+                  {selectedFeature}
+                </span>
+              </div>
+              <button
+                type="button"
+                className="text-black/60 hover:text-black text-sm"
+                onClick={handleClearFeature}
+              >
+                ✕
+              </button>
             </div>
+            
+            {/* 输入框和按钮行 */}
+            <div className="flex items-center gap-2">
+              {/* 左侧加号按钮 */}
+              <button
+                type="button"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 flex-shrink-0"
+                aria-label="更多选项"
+                onClick={() => setIsMenuVisible(!isMenuVisible)}
+              >
+                <Plus className="h-5 w-5 text-black" />
+              </button>
+              
+              {/* 中间输入框 */}
+              <div className="flex-1">
+                <textarea
+                  name="input"
+                  value={value}
+                  onChange={onChange}
+                  placeholder="询问任何问题"
+                  rows={1}
+                  onInput={(e) => {
+                    const ta = e.currentTarget;
+                    ta.style.height = 'auto';
+                    ta.style.height = `${Math.min(ta.scrollHeight, 160)}px`;
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault();
+                      const form = e.currentTarget.form;
+                      if (form && e.currentTarget.value.trim().length > 0 && !disabled) {
+                        form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+                      }
+                    }
+                  }}
+                  className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
+                />
+              </div>
+              
+              {/* 右侧按钮组 */}
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <button
+                  type="button"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-zinc-50"
+                  aria-label="语音"
+                >
+                  <MicrophoneIcon className="h-5 w-5 text-black" />
+                </button>
+                <button
+                  type="submit"
+                  disabled={disabled || value.trim().length === 0}
+                  className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${
+                    disabled
+                      ? 'bg-[#E5F3FF] text-[#0285FF]'
+                      : value.trim().length === 0 
+                      ? 'bg-zinc-100 text-black/60 cursor-not-allowed'
+                      : 'bg-[#0285FF] text-white hover:bg-[#0264CC]'
+                  }`}
+                  aria-label="发送"
+                >
+                  <ArrowUpIcon className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            {/* 左侧加号按钮 */}
             <button
               type="button"
-              className="text-black/60 hover:text-black text-sm"
-              onClick={handleClearFeature}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 flex-shrink-0 ${isWelcomeScreen ? 'bg-zinc-100' : ''}`}
+              aria-label="更多选项"
+              onClick={() => setIsMenuVisible(!isMenuVisible)}
             >
-              ✕
+              <Plus className="h-5 w-5 text-black" />
             </button>
-          </div>
-        )}
-        
-        {/* 输入框和按钮行 */}
-        <div className="flex items-center gap-2">
-          {/* 左侧加号按钮 */}
-          <button
-            type="button"
-            className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-black/60 hover:bg-zinc-50 flex-shrink-0 ${isWelcomeScreen && !selectedFeature ? 'bg-zinc-100' : ''}`}
-            aria-label="更多选项"
-            onClick={() => setIsMenuVisible(!isMenuVisible)}
-          >
-            <Plus className="h-5 w-5 text-black" />
-          </button>
-          
-          {/* 中间输入框 */}
-          <div className="flex-1">
-            <textarea
-              name="input"
-              value={value}
-              onChange={onChange}
-              placeholder="询问任何问题"
-              rows={1}
-              onInput={(e) => {
-                const ta = e.currentTarget;
-                ta.style.height = 'auto';
-                ta.style.height = `${Math.min(ta.scrollHeight, 160)}px`;
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault();
-                  const form = e.currentTarget.form;
-                  if (form && e.currentTarget.value.trim().length > 0 && !disabled) {
-                    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+            
+            {/* 中间输入框 */}
+            <div className="flex-1">
+              <textarea
+                name="input"
+                value={value}
+                onChange={onChange}
+                placeholder="询问任何问题"
+                rows={1}
+                onInput={(e) => {
+                  const ta = e.currentTarget;
+                  ta.style.height = 'auto';
+                  ta.style.height = `${Math.min(ta.scrollHeight, 160)}px`;
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    const form = e.currentTarget.form;
+                    if (form && e.currentTarget.value.trim().length > 0 && !disabled) {
+                      form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+                    }
                   }
-                }
-              }}
-              className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
-            />
-          </div>
-          
-          {/* 右侧按钮组 */}
-          <div className="flex items-center gap-2 flex-shrink-0">
+                }}
+                className="w-full resize-none bg-transparent outline-none placeholder:text-black/60 leading-6 py-1 text-base font-normal"
+              />
+            </div>
+            
+            {/* 语音按钮 */}
             <button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-zinc-50"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-zinc-50 flex-shrink-0"
               aria-label="语音"
             >
               <MicrophoneIcon className="h-5 w-5 text-black" />
             </button>
+            
+            {/* 发送按钮 */}
             <button
               type="submit"
               disabled={disabled || value.trim().length === 0}
-              className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full flex-shrink-0 ${
                 disabled
                   ? 'bg-[#E5F3FF] text-[#0285FF]'
                   : value.trim().length === 0 
@@ -158,8 +223,8 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
             >
               <ArrowUpIcon className="h-5 w-5" />
             </button>
-          </div>
-        </div>
+          </>
+        )}
       </form>
       {!isWelcomeScreen && (
         <div className="mt-1 text-center text-sm font-normal text-black/60">
