@@ -107,7 +107,6 @@ export default function ChatInput({ className, value, disabled, isWelcomeScreen 
       />
       
       <form
-       
         className={`${selectedFeature ? 'flex flex-col gap-3' : 'flex items-center gap-2'} rounded-[28px] overflow-hidden border border-zinc-200 bg-white shadow-sm hover:border-zinc-300 focus-within:border-zinc-400 min-h-[54px] max-h-[208px] ${isWelcomeScreen ? 'mx-4' : ''} ${selectedFeature ? 'px-2.5 py-2.5' : 'px-2.5 py-2.5'}`}
         onSubmit={(e) => {
           e.preventDefault();
