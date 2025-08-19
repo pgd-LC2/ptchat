@@ -173,7 +173,7 @@ export default function HomePage() {
         onNewChat={handleNewChat}
         onChatSelect={handleChatSelect}
       />
-      <main className="ml-[260px] min-h-screen">
+      <main className="fixed left-[260px] right-0 top-0 bottom-0 overflow-hidden">
         <ChatView
           messages={currentMessages}
           input={input}

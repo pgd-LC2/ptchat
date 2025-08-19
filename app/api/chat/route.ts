@@ -121,9 +121,6 @@ export async function POST(req: NextRequest) {
                     console.log('📤 发送流式内容:', content);
                     controller.enqueue(encoder.encode(content));
                     
-                    // 添加小延迟以确保流式效果
-                    await new Promise(resolve => setTimeout(resolve, 20));
-                  }
                 } catch (e) {
                   console.warn('⚠️ 解析失败:', e);
                 }
