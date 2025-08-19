@@ -15,7 +15,7 @@ const API_CONFIG = {
   // API基础URL
   baseUrl: 'https://apis.iflow.cn/v1',
   // 默认模型
-  model: 'DeepSeek-R1',
+  model: 'Qwen3-Coder',
   // 默认温度参数
   temperature: 0.7,
   // 默认最大token数
