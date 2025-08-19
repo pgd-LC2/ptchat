@@ -146,7 +146,7 @@ export default function HomePage() {
       const currentSession = chatSessions.find(session => session.id === targetChatId);
       const allMessages = currentSession ? [...currentSession.messages, userMsg] : [userMsg];
 
-      // 调用 API 处理模块
+      // 调用模拟 API（无实际AI功能）
       sendChatMessage(allMessages, handleStreamResponse(assistantMsg.id, targetChatId))
         .finally(() => {
           setIsLoading(false);
