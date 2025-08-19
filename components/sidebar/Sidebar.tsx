@@ -97,7 +97,7 @@ export default function Sidebar({
   onAppSelect 
 }: Props) {
   return (
-    <aside className="flex h-screen w-[260px] flex-col border-r border-zinc-200 bg-white">
+    <aside className="fixed left-0 top-0 z-30 flex h-screen w-[260px] flex-col border-r border-zinc-200 bg-white">
       {/* Header with logo and more button */}
       <SidebarHeader />
       

@@ -91,35 +91,42 @@ export async function POST(req: NextRequest) {
             // 解码数据块
             buffer += decoder.decode(value, { stream: true });
             
-            // 处理可能包含多个SSE事件的缓冲区
+            // 处理SSE数据块
+            buffer += decoder.decode(value, { stream: true });
+            
             const lines = buffer.split('\n');
-            buffer = lines.pop() || ''; // 保留最后一个可能不完整的行
-
+            buffer = lines.pop() || '';
+            
             for (const line of lines) {
               const trimmedLine = line.trim();
+              if (!trimmedLine) continue;
               
-              if (trimmedLine === '') continue;
               if (trimmedLine === 'data: [DONE]') {
-                console.log('📝 接收到结束标记');
+                console.log('✅ 流结束');
                 controller.close();
                 return;
               }
               
               if (trimmedLine.startsWith('data: ')) {
                 try {
-                  const jsonData = trimmedLine.slice(6);
-                  const parsed = JSON.parse(jsonData);
-                  
-                  // 提取增量内容
-                  const deltaContent = parsed.choices?.[0]?.delta?.content || '';
-                  if (deltaContent) {
-                    console.log('📤 发送增量内容:', JSON.stringify(deltaContent));
-                    // 将增量内容作为纯文本发送
-                    controller.enqueue(encoder.encode(deltaContent));
+                  const jsonStr = trimmedLine.slice(6);
+                  if (jsonStr === '[DONE]') {
+                    controller.close();
+                    return;
                   }
-                } catch (parseError) {
-                  console.warn('⚠️ 解析SSE数据失败:', parseError);
-                  continue;
+                  
+                  const data = JSON.parse(jsonStr);
+                  const content = data.choices?.[0]?.delta?.content;
+                  
+                  if (content) {
+                    console.log('📤 发送流式内容:', content);
+                    controller.enqueue(encoder.encode(content));
+                    
+                    // 添加小延迟以确保流式效果
+                    await new Promise(resolve => setTimeout(resolve, 20));
+                  }
+                } catch (e) {
+                  console.warn('⚠️ 解析失败:', e);
                 }
               }
             }

@@ -173,7 +173,7 @@ export default function HomePage() {
         onNewChat={handleNewChat}
         onChatSelect={handleChatSelect}
       />
-      <main className="flex-1">
+      <main className="ml-[260px] min-h-screen">
         <ChatView
           messages={currentMessages}
           input={input}
