@@ -30,4 +30,4 @@ export async function sendChatMessage(
     await new Promise(resolve => setTimeout(resolve, 50));
     onStream(response.slice(0, i + 1));
   }
-}；
+};
