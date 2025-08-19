@@ -33,7 +33,11 @@ const API_CONFIG = {
  */
 function validateConfig(): void {
   if (!API_CONFIG.apiKey) {
-    throw new Error('API密钥未配置。请设置IFLOW_API_KEY环境变量');
+    console.error('环境变量检查:', {
+      IFLOW_API_KEY_EXISTS: !!process.env.IFLOW_API_KEY,
+      NODE_ENV: process.env.NODE_ENV
+    });
+    throw new Error('API密钥未配置。请在.env.local文件中设置IFLOW_API_KEY环境变量');
   }
 }
 
@@ -49,8 +53,12 @@ function convertMessages(messages: ChatMessage[]): Array<{role: string; content:
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('API路由开始处理请求');
+    
     // 验证配置
     validateConfig();
+    
+    console.log('API配置验证通过，API密钥长度:', API_CONFIG.apiKey.length);
     
     // 解析请求体
     const { messages } = await request.json();
@@ -81,6 +89,12 @@ export async function POST(request: NextRequest) {
       }
     };
     
+    console.log('准备发送请求到心流API:', {
+      url: `${API_CONFIG.baseUrl}/chat/completions`,
+      model: requestBody.model,
+      messagesCount: apiMessages.length
+    });
+    
     // 发送请求到心流API
     const response = await fetch(`${API_CONFIG.baseUrl}/chat/completions`, {
       method: 'POST',
@@ -89,6 +103,12 @@ export async function POST(request: NextRequest) {
         'Authorization': `Bearer ${API_CONFIG.apiKey}`,
       },
       body: JSON.stringify(requestBody),
+    });
+    
+    console.log('心流API响应状态:', {
+      status: response.status,
+      statusText: response.statusText,
+      ok: response.ok
     });
     
     if (!response.ok) {
