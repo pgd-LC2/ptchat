@@ -19,7 +19,7 @@ const API_CONFIG = {
   // 默认温度参数
   temperature: 0.7,
   // 默认最大token数
-  maxTokens: 2000,
+  maxTokens: 8192,
   // 默认top_p值
   topP: 0.7,
   // 默认top_k值
