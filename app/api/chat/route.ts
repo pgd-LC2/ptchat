@@ -91,8 +91,7 @@ export async function POST(req: NextRequest) {
             // 解码数据块
             buffer += decoder.decode(value, { stream: true });
             
-            // 处理SSE数据块
-            buffer += decoder.decode(value, { stream: true });
+
             
             const lines = buffer.split('\n');
             buffer = lines.pop() || '';
