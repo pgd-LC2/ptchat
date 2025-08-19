@@ -12,7 +12,7 @@ export type StreamCallback = (chunk: string) => void;
 // 智谱AI客户端配置
 const getZhipuAIClient = () => {
   // 推荐使用环境变量存储API Key
-  const apiKey = process.env.ZHIPUAI_API_KEY || 'your_api_key_here';
+  const apiKey = process.env.NEXT_PUBLIC_ZHIPUAI_API_KEY || 'your_api_key_here';
   
   return new ZhipuAI({
     apiKey: apiKey,
