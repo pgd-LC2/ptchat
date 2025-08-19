@@ -21,18 +21,25 @@ export async function sendChatMessage(
   onStream: StreamCallback
 ): Promise<void> {
   try {
-    // 发送请求
-    const response = await fetch('/api/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ messages }),
-    });
+    // 发送请求，增加错误处理
+    let response;
+    try {
+      response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ messages }),
+      });
+    } catch (fetchError: any) {
+      console.error('本地API请求失败:', fetchError);
+      throw new Error(`网络连接失败: ${fetchError.message}`);
+    }
     
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(`API请求失败: ${response.status} - ${errorData.error || '未知错误'}`);
+      console.error('API响应错误:', response.status, errorData);
+      throw new Error(`服务器响应错误: ${response.status} - ${errorData.error || '未知错误'}`);
     }
     
     // 处理流式响应
@@ -69,17 +76,25 @@ export async function sendChatMessage(
           try {
             const data = JSON.parse(dataStr);
             
+            if (dataStr === '[DONE]') {
+              break;
+            }
+            
             if (data.content) {
               onStream(data.content);
             }
-          } catch (e) {
-            console.error('解析流数据失败:', e);
+          } catch (parseError) {
+            console.error('解析流数据失败:', parseError, '原始数据:', dataStr);
           }
         }
       }
     }
-  } catch (error) {
-    console.error('API请求错误:', error);
+  } catch (error: any) {
+    console.error('API请求错误:', {
+      message: error.message,
+      stack: error.stack,
+      cause: error.cause
+    });
     throw error;
   }
 }

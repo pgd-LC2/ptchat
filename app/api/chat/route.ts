@@ -56,12 +56,30 @@ export async function POST(request: NextRequest) {
     console.log('API路由开始处理请求');
     
     // 验证配置
-    validateConfig();
+    try {
+      validateConfig();
+    } catch (configError) {
+      console.error('配置验证失败:', configError);
+      return NextResponse.json(
+        { error: '服务器配置错误。请检查环境变量设置。' },
+        { status: 500 }
+      );
+    }
     
     console.log('API配置验证通过，API密钥长度:', API_CONFIG.apiKey.length);
     
-    // 解析请求体
-    const { messages } = await request.json();
+    // 解析请求体 
+    let messages;
+    try {
+      const body = await request.json();
+      messages = body.messages;
+    } catch (parseError) {
+      console.error('请求体解析失败:', parseError);
+      return NextResponse.json(
+        { error: '无效的请求格式' },
+        { status: 400 }
+      );
+    }
     
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
@@ -95,15 +113,46 @@ export async function POST(request: NextRequest) {
       messagesCount: apiMessages.length
     });
     
-    // 发送请求到心流API
-    const response = await fetch(`${API_CONFIG.baseUrl}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_CONFIG.apiKey}`,
-      },
-      body: JSON.stringify(requestBody),
-    });
+    // 发送请求到心流API，增加超时和错误处理
+    let response;
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30秒超时
+      
+      response = await fetch(`${API_CONFIG.baseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${API_CONFIG.apiKey}`,
+          'User-Agent': 'DevinPTChat/1.0',
+        },
+        body: JSON.stringify(requestBody),
+        signal: controller.signal,
+      });
+      
+      clearTimeout(timeoutId);
+    } catch (fetchError: any) {
+      console.error('API请求失败:', {
+        error: fetchError.message,
+        cause: fetchError.cause,
+        stack: fetchError.stack
+      });
+      
+      // 返回模拟响应以保持应用可用性
+      return new Response(
+        createSimulatedStream(),
+        {
+          headers: {
+            'Content-Type': 'text/event-stream',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+          },
+        }
+      );
+    }
     
     console.log('心流API响应状态:', {
       status: response.status,
@@ -114,9 +163,20 @@ export async function POST(request: NextRequest) {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       console.error('心流API请求失败:', response.status, errorData);
-      return NextResponse.json(
-        { error: `API请求失败: ${response.status} - ${errorData.error?.message || '未知错误'}` },
-        { status: response.status }
+      
+      // 如果外部API失败，返回模拟响应
+      return new Response(
+        createSimulatedStream(),
+        {
+          headers: {
+            'Content-Type': 'text/event-stream',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+          },
+        }
       );
     }
     
@@ -217,5 +277,28 @@ export async function OPTIONS() {
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
     },
+  });
+}
+
+// 创建模拟流式响应（用作后备方案）
+function createSimulatedStream() {
+  const encoder = new TextEncoder();
+  let index = 0;
+  const simulatedResponse = "抱歉，当前AI服务暂时不可用。这是一个模拟响应，用于演示聊天界面的功能。请稍后再试或检查网络连接。";
+  
+  return new ReadableStream({
+    start(controller) {
+      const interval = setInterval(() => {
+        if (index < simulatedResponse.length) {
+          const char = simulatedResponse[index];
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: char })}\n\n`));
+          index++;
+        } else {
+          controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+          controller.close();
+          clearInterval(interval);
+        }
+      }, 50); // 50ms间隔模拟打字效果
+    }
   });
 }
