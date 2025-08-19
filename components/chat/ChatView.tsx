@@ -21,10 +21,10 @@ type Props = {
 export default function ChatView({ messages, input, isLoading, onInputChange, onSubmit }: Props) {
   const hasMessages = messages.length > 0;
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex min-h-screen flex-col">
       {hasMessages ? (
         <>
-          <div className="flex-1 overflow-y-auto scrollbar-hide">
+          <div className="flex-1 overflow-y-auto">
             <div className="mx-auto w-full max-w-[900px] px-8 py-6 space-y-4">
               {messages.map((m) =>
                 m.role === 'user' ? (
@@ -35,7 +35,7 @@ export default function ChatView({ messages, input, isLoading, onInputChange, on
               )}
             </div>
           </div>
-          <div className="flex-shrink-0 bg-[#F7F7F8]/80 backdrop-blur supports-[backdrop-filter]:bg-[#F7F7F8]/60">
+          <div className="sticky bottom-0 bg-[#F7F7F8]/80 backdrop-blur supports-[backdrop-filter]:bg-[#F7F7F8]/60">
             <ChatInput value={input} disabled={isLoading} onChange={onInputChange} onSubmit={onSubmit} />
           </div>
         </>
@@ -45,7 +45,7 @@ export default function ChatView({ messages, input, isLoading, onInputChange, on
           isLoading={isLoading}
           onInputChange={onInputChange}
           onSubmit={onSubmit}
-          className="h-full"
+          className="flex-1"
         />
       )}
     </div>

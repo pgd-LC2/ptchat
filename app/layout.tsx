@@ -10,7 +10,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="zh-CN">
       <body className="antialiased bg-[#F7F7F8] text-black">
-        <div className="min-h-screen">
+        <div className="flex min-h-screen">
           {children}
         </div>
       </body>
