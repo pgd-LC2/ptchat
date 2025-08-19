@@ -8,6 +8,7 @@ export type ChatMessage = {
 };
 
 export type StreamCallback = (chunk: string) => void;
+export type StreamCallback = (content: string, isError?: boolean) => void;
 
 /**
  * 发送聊天消息到BigModel API
@@ -21,6 +22,27 @@ export async function sendChatMessage(
 ): Promise<void> {
   console.log('🚀 开始发送消息到BigModel API');
   
+  // 已知的错误消息模式
+  const errorPatterns = [
+    '并发数过多请稍后再试',
+    'API密钥无效',
+    '服务暂时不可用',
+    '请求失败',
+    'too many requests',
+    'rate limit',
+    'invalid api key',
+    'service unavailable',
+    'internal server error',
+  ];
+
+  // 检查内容是否为错误消息
+  const isErrorContent = (content: string): boolean => {
+    const lowerContent = content.toLowerCase();
+    return errorPatterns.some(pattern => 
+      lowerContent.includes(pattern.toLowerCase())
+    );
+  };
+
   try {
     const response = await fetch('/api/chat', {
       method: 'POST',
@@ -76,8 +98,10 @@ export async function sendChatMessage(
             const data = JSON.parse(jsonStr);
             const content = data.choices?.[0]?.delta?.content;
             
-            if (content) {
-              onStream(content);
+            if (content !== undefined) {
+              // 检查是否为错误内容
+              const isError = isErrorContent(content);
+              onStream(content, isError);
             }
 
             // 检查是否结束
@@ -95,13 +119,17 @@ export async function sendChatMessage(
     console.error('❌ API请求错误:', error.message);
     
     // 显示友好的错误消息
+    let errorMessage = '';
     if (error.message.includes('Failed to fetch')) {
-      onStream('网络连接失败，请检查网络后重试');
+      errorMessage = '网络连接失败，请检查网络后重试';
     } else if (error.message.includes('timeout')) {
-      onStream('并发数过多请稍后再试');
+      errorMessage = '并发数过多请稍后再试';
     } else {
-      onStream('服务暂时不可用，请稍后重试');
+      errorMessage = '服务暂时不可用，请稍后重试';
     }
+    
+    // 将错误消息标记为错误
+    onStream(errorMessage, true);
     
     throw new Error(`API请求失败: ${error.message}`);
   }

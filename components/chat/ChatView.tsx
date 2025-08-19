@@ -8,6 +8,7 @@ export type ChatMessage = {
   id: string;
   role: 'user' | 'assistant';
   content: string;
+  isError?: boolean;
 };
 
 type Props = {
@@ -30,7 +31,7 @@ export default function ChatView({ messages, input, isLoading, onInputChange, on
                 m.role === 'user' ? (
                   <UserMessage key={m.id} content={m.content} />
                 ) : (
-                  <AssistantMessage key={m.id} content={m.content} />
+                  <AssistantMessage key={m.id} content={m.content} isError={m.isError} />
                 )
               )}
             </div>
