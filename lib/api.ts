@@ -14,8 +14,8 @@ export type StreamCallback = (chunk: string) => void;
  * 心流API配置
  */
 export const API_CONFIG = {
-  // 从环境变量获取API密钥
-  apiKey: process.env.IFLOW_API_KEY || '',
+  // 从客户端环境变量获取API密钥
+  apiKey: process.env.NEXT_PUBLIC_IFLOW_API_KEY || '',
   // API基础URL
   baseUrl: 'https://apis.iflow.cn/v1',
   // 默认模型
