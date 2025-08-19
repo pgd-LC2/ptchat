@@ -47,7 +47,7 @@ export async function sendChatMessage(
     // 处理流式响应
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
-    let accumulatedContent = '';
+    let accumulatedContent = ''; // 在客户端累积内容
 
     try {
       while (true) {
@@ -58,9 +58,12 @@ export async function sendChatMessage(
           break;
         }
 
-        // 解码接收到的数据块
-        const chunk = decoder.decode(value, { stream: true });
-        accumulatedContent += chunk;
+        // 解码接收到的增量数据
+        const deltaContent = decoder.decode(value, { stream: true });
+        console.log('📥 接收到增量内容:', JSON.stringify(deltaContent));
+        
+        // 累积内容
+        accumulatedContent += deltaContent;
         
         // 调用回调函数，传递累积的完整内容
         onStream(accumulatedContent);

@@ -110,11 +110,12 @@ export async function POST(req: NextRequest) {
                   const jsonData = trimmedLine.slice(6);
                   const parsed = JSON.parse(jsonData);
                   
-                  // 提取内容
-                  const content = parsed.choices?.[0]?.delta?.content || '';
-                  if (content) {
-                    // 将内容作为纯文本发送
-                    controller.enqueue(encoder.encode(content));
+                  // 提取增量内容
+                  const deltaContent = parsed.choices?.[0]?.delta?.content || '';
+                  if (deltaContent) {
+                    console.log('📤 发送增量内容:', JSON.stringify(deltaContent));
+                    // 将增量内容作为纯文本发送
+                    controller.enqueue(encoder.encode(deltaContent));
                   }
                 } catch (parseError) {
                   console.warn('⚠️ 解析SSE数据失败:', parseError);
@@ -138,6 +139,7 @@ export async function POST(req: NextRequest) {
         'Content-Type': 'text/plain; charset=utf-8',
         'Cache-Control': 'no-cache',
         'Connection': 'keep-alive',
+        'X-Accel-Buffering': 'no', // 禁用nginx缓冲
       },
     });
 
