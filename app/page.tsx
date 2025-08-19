@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { sendChatMessage } from '../lib/api';
 import Sidebar from '../components/sidebar/Sidebar';
 import ChatView, { ChatMessage } from '../components/chat/ChatView';
 import SearchModal from '../components/SearchModal';
@@ -37,7 +38,6 @@ export default function HomePage() {
   const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const currentMessages = currentChatId 
     ? chatSessions.find(session => session.id === currentChatId)?.messages || []
@@ -77,28 +77,21 @@ export default function HomePage() {
     // 这里可以实现不同应用的逻辑
   }, []);
 
-  const simulateAssistantStream = useCallback((text: string, assistantId: string, chatId: string) => {
-    let i = 0;
-    timerRef.current && clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => {
-      i += 1;
+  const handleStreamResponse = useCallback((assistantId: string, chatId: string) => {
+    return (chunk: string) => {
       setChatSessions(prev => 
         prev.map(session => 
           session.id === chatId 
             ? {
                 ...session,
                 messages: session.messages.map(m => 
-                  m.id === assistantId ? { ...m, content: text.slice(0, i) } : m
+                  m.id === assistantId ? { ...m, content: chunk } : m
                 )
               }
             : session
         )
       );
-      if (i >= text.length) {
-        if (timerRef.current) clearInterval(timerRef.current);
-        setIsLoading(false);
-      }
-    }, 20);
+    };
   }, []);
 
   const handleSubmit = useCallback(
@@ -149,20 +142,18 @@ export default function HomePage() {
       setInput('');
       setIsLoading(true);
 
-      const responseText =
-        `这是一个来自前端本地的模拟流式响应。你刚才说：“${value}”。` +
-        '当你接入真实 LLM API 时，这里将被替换为真正的流式内容。';
+      // 获取当前会话的所有消息
+      const currentSession = chatSessions.find(session => session.id === targetChatId);
+      const allMessages = currentSession ? [...currentSession.messages, userMsg] : [userMsg];
 
-      simulateAssistantStream(responseText, assistantMsg.id, targetChatId);
+      // 调用 API 处理模块
+      sendChatMessage(allMessages, handleStreamResponse(assistantMsg.id, targetChatId))
+        .finally(() => {
+          setIsLoading(false);
+        });
     },
-    [input, isLoading, simulateAssistantStream, currentChatId, setChatSessions]
+    [input, isLoading, handleStreamResponse, currentChatId, setChatSessions, chatSessions]
   );
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, []);
 
   return (
     <>
