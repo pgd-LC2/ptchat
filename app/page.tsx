@@ -78,19 +78,14 @@ export default function HomePage() {
   }, []);
 
   const handleStreamResponse = useCallback((assistantId: string, chatId: string) => {
-    return (content: string, isError?: boolean) => {
+    return (chunk: string) => {
       setChatSessions(prev => 
         prev.map(session => 
           session.id === chatId 
             ? {
                 ...session,
                 messages: session.messages.map(m => 
-                  m.id === assistantId ? { 
-                    ...m, 
-                    content: (m.content || '') + content,
-                    // 添加错误标记到消息对象
-                    isError: isError || (m as any).isError
-                  } : m
+                  m.id === assistantId ? { ...m, content: chunk } : m
                 )
               }
             : session
@@ -128,12 +123,6 @@ export default function HomePage() {
         id: `a_${Date.now()}`,
         role: 'assistant',
         content: '',
-      } as ChatMessage & { isError?: boolean };
-
-      // 为了类型安全，我们需要扩展ChatMessage类型
-      const extendedAssistantMsg = {
-        ...assistantMsg,
-        isError: false
       };
 
       setChatSessions(prev => 
@@ -141,7 +130,7 @@ export default function HomePage() {
           session.id === targetChatId 
             ? {
                 ...session,
-                messages: [...session.messages, userMsg, extendedAssistantMsg],
+                messages: [...session.messages, userMsg, assistantMsg],
                 lastActivity: new Date(),
                 title: session.messages.length === 0 
                   ? value.slice(0, 20) + (value.length > 20 ? '...' : '')
@@ -158,7 +147,7 @@ export default function HomePage() {
       const allMessages = currentSession ? [...currentSession.messages, userMsg] : [userMsg];
 
       // 调用模拟 API（无实际AI功能）
-      sendChatMessage(allMessages, handleStreamResponse(extendedAssistantMsg.id, targetChatId))
+      sendChatMessage(allMessages, handleStreamResponse(assistantMsg.id, targetChatId))
         .finally(() => {
           setIsLoading(false);
         });
