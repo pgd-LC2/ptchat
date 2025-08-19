@@ -120,7 +120,7 @@ export async function POST(req: NextRequest) {
                   if (content) {
                     console.log('📤 发送流式内容:', content);
                     controller.enqueue(encoder.encode(content));
-                    
+                  }
                 } catch (e) {
                   console.warn('⚠️ 解析失败:', e);
                 }
