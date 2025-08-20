@@ -12,10 +12,10 @@ export type StreamCallback = (chunk: string) => void;
 // 智谱AI客户端配置
 const getZhipuAIClient = () => {
   // 从环境变量读取API Key
-  const apiKey = process.env.ZHIPUAI_API_KEY;
+  const apiKey = process.env.NEXT_PUBLIC_ZHIPUAI_API_KEY;
   
   if (!apiKey) {
-    throw new Error('ZHIPUAI_API_KEY 环境变量未设置，请在 .env.local 文件中配置');
+    throw new Error('NEXT_PUBLIC_ZHIPUAI_API_KEY 环境变量未设置，请在 .env.local 文件中配置');
   }
 
   return new ZhipuAI({
