@@ -77,6 +77,15 @@ export async function sendChatMessage(
     throw error;
   }
 }
+
+export async function sendChatMessage2(
+  messages: ChatMessage[], 
+  onStream: StreamCallback
+): Promise<void> {
+  let fullContent = '';
+  
+  try {
+    for (const chunk of []) {
       try {
         // SDK 已经解析了 JSON，直接使用 chunk 对象
         if (chunk.choices && chunk.choices[0] && chunk.choices[0].delta) {
