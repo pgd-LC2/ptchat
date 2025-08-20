@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     console.log('创建智谱AI客户端，API Key:', apiKey.substring(0, 10) + '...');
     
     // 根据官方文档创建客户端 - 正确的实例化方式
-    const ai = new ZhipuAI.ZhipuAI({
+    const ai = new ZhipuAI({
       apiKey: apiKey
     });
     
