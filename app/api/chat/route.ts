@@ -7,8 +7,8 @@ export type ChatMessage = {
   content: string;
 };
 
-// 使用固定的API密钥
-const apiKey = '336f0e6cb8eb4ed581c3461b7a2e5c85.E73mfNB2xr2kZWcu';
+// 从环境变量获取API密钥
+const apiKey = process.env.ZHIPU_AI_API_KEY || '336f0e6cb8eb4ed581c3461b7a2e5c85.E73mfNB2xr2kZWcu';
 
 export async function POST(request: NextRequest) {
   try {
@@ -16,8 +16,8 @@ export async function POST(request: NextRequest) {
     
     console.log('创建智谱AI客户端，API Key:', apiKey.substring(0, 10) + '...');
     
-    // 根据官方文档创建客户端
-    const ai = new ZhipuAI({
+    // 根据官方文档创建客户端 - 正确的实例化方式
+    const ai = new ZhipuAI.ZhipuAI({
       apiKey: apiKey
     });
     
