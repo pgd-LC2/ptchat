@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
   try {
     const { messages } = await request.json();
     
-    console.log('使用直接配置的API Key');
+    console.log('使用API Key:', apiKey.substring(0, 10) + '...');
     
     const ai = getZhipuAIClient();
     
@@ -68,22 +68,28 @@ export async function POST(request: NextRequest) {
         } catch (error) {
           console.error('调用智谱AI API时出错:', error);
           
-          // 详细的错误信息
-          if (error && typeof error === 'object' && 'message' in error) {
-            console.error('错误详情:', error.message);
-          }
-          
+          // 解析并显示详细的错误信息
           let errorMessage = '抱歉，连接AI服务时出现错误，请稍后重试。';
           
-          if (error instanceof Error) {
-            if (error.message.includes('API key')) {
-              errorMessage = 'API密钥无效，请检查配置。';
-            } else if (error.message.includes('timeout')) {
-              errorMessage = '请求超时，请检查网络连接后重试。';
-            } else if (error.message.includes('rate limit')) {
-              errorMessage = 'API调用频率过高，请稍后重试。';
-            } else if (error.message.includes('Authorization') || error.message.includes('invalid')) {
-              errorMessage = 'API密钥无效，请检查API密钥是否正确。';
+          if (error && typeof error === 'object') {
+            console.error('完整错误对象:', error);
+            
+            // 尝试解析错误响应
+            if ('response' in error && error.response) {
+              console.error('API响应错误:', error.response);
+              if (error.response.data) {
+                console.error('错误数据:', error.response.data);
+                if (error.response.data.error && error.response.data.error.message) {
+                  errorMessage = `API错误: ${error.response.data.error.message}`;
+                }
+              }
+            }
+            
+            if ('message' in error) {
+              console.error('错误消息:', error.message);
+              if (error.message.includes('1002')) {
+                errorMessage = 'API密钥无效或已过期，请检查您的智谱AI API密钥是否正确。';
+              }
             }
           }
           
