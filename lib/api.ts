@@ -91,3 +91,4 @@ export async function sendChatMessage(
     onStream(errorMessage);
     throw error;
   }
+}
