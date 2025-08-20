@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ZhipuAI } from 'zhipuai-sdk-nodejs-v4';
 
-// 在模块顶级定义API密钥
-const apiKey = '336f0e6cb8eb4ed581c3461b7a2e5c85.E73mfNB2xr2kZWcu';
+// API密钥
+const ZHIPU_API_KEY = '336f0e6cb8eb4ed581c3461b7a2e5c85.E73mfNB2xr2kZWcu';
 
 export type ChatMessage = {
   id: string;
@@ -12,20 +12,32 @@ export type ChatMessage = {
 
 // 智谱AI客户端配置
 const getZhipuAIClient = () => {
-  return new ZhipuAI({
-    apiKey: apiKey,
-    baseUrl: 'https://open.bigmodel.cn/api/paas/v4',
-    timeout: 30000,
-  });
+  try {
+    return new ZhipuAI({
+      apiKey: ZHIPU_API_KEY,
+    });
+  } catch (error) {
+    console.error('创建ZhipuAI客户端失败:', error);
+    throw error;
+  }
 };
 
 export async function POST(request: NextRequest) {
   try {
     const { messages } = await request.json();
     
-    console.log('使用API Key:', apiKey.substring(0, 10) + '...');
+    console.log('使用API Key:', ZHIPU_API_KEY.substring(0, 10) + '...');
     
-    const ai = getZhipuAIClient();
+    let ai;
+    try {
+      ai = getZhipuAIClient();
+    } catch (error) {
+      console.error('无法创建AI客户端:', error);
+      return NextResponse.json(
+        { error: 'AI服务配置错误' }, 
+        { status: 500 }
+      );
+    }
     
     // 转换消息格式以符合API要求
     const apiMessages = messages.map((msg: ChatMessage) => ({
@@ -33,15 +45,24 @@ export async function POST(request: NextRequest) {
       content: msg.content
     }));
 
-    // 创建流式聊天完成请求 
-    const response = await ai.createCompletions({
-      model: 'glm-4',
-      messages: apiMessages,
-      stream: true,
-      temperature: 0.7,
-      top_p: 0.8,
-      max_tokens: 2048
-    });
+    // 创建流式聊天完成请求
+    let response;
+    try {
+      response = await ai.createCompletions({
+        model: 'glm-4',
+        messages: apiMessages,
+        stream: true,
+        temperature: 0.7,
+        top_p: 0.8,
+        max_tokens: 2048
+      });
+    } catch (error) {
+      console.error('调用AI服务失败:', error);
+      return NextResponse.json(
+        { error: 'AI服务调用失败' }, 
+        { status: 500 }
+      );
+    }
 
     // 创建可读流
     const stream = new ReadableStream({
