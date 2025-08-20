@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ZhipuAI } from 'zhipuai-sdk-nodejs-v4';
 
+// 在模块顶级定义API密钥
+const apiKey = 'b6d6fad0d07a4232acd5c8bb5b325218.dpsLqgmR0FLhBKAz';
+
 export type ChatMessage = {
   id: string;
   role: 'user' | 'assistant' | 'system';
@@ -9,8 +12,6 @@ export type ChatMessage = {
 
 // 智谱AI客户端配置
 const getZhipuAIClient = () => {
-  const apiKey = 'b6d6fad0d07a4232acd5c8bb5b325218.dpsLqgmR0FLhBKAz';
-
   return new ZhipuAI({
     apiKey: apiKey,
     baseUrl: 'https://open.bigmodel.cn/api/paas/v4',
