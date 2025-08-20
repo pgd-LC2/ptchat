@@ -26,6 +26,19 @@ export async function POST(request: NextRequest) {
   try {
     const { messages } = await request.json();
     
+    // 检查API密钥是否存在
+    const apiKey = process.env.ZHIPUAI_API_KEY;
+    if (!apiKey) {
+      console.error('ZHIPUAI_API_KEY 未设置');
+      return NextResponse.json(
+        { error: 'ZHIPUAI_API_KEY 未设置，请检查环境变量配置' }, 
+        { status: 500 }
+      );
+    }
+
+    console.log('API Key 长度:', apiKey.length);
+    console.log('API Key 前缀:', apiKey.substring(0, 10) + '...');
+    
     const ai = getZhipuAIClient();
     
     // 转换消息格式以符合API要求
@@ -70,6 +83,11 @@ export async function POST(request: NextRequest) {
         } catch (error) {
           console.error('调用智谱AI API时出错:', error);
           
+          // 详细的错误信息
+          if (error && typeof error === 'object' && 'message' in error) {
+            console.error('错误详情:', error.message);
+          }
+          
           let errorMessage = '抱歉，连接AI服务时出现错误，请稍后重试。';
           
           if (error instanceof Error) {
@@ -79,6 +97,8 @@ export async function POST(request: NextRequest) {
               errorMessage = '请求超时，请检查网络连接后重试。';
             } else if (error.message.includes('rate limit')) {
               errorMessage = 'API调用频率过高，请稍后重试。';
+            } else if (error.message.includes('Authorization') || error.message.includes('invalid')) {
+              errorMessage = 'API密钥无效，请检查API密钥是否正确。';
             }
           }
           
