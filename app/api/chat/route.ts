@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ZhipuAI } from 'zhipuai-sdk-nodejs-v4';
 
 // 在模块顶级定义API密钥
-const apiKey = 'b6d6fad0d07a4232acd5c8bb5b325218.dpsLqgmR0FLhBKAz';
+const apiKey = '336f0e6cb8eb4ed581c3461b7a2e5c85.E73mfNB2xr2kZWcu';
 
 export type ChatMessage = {
   id: string;
