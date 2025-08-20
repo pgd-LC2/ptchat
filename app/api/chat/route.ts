@@ -1,43 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ZhipuAI } from 'zhipuai-sdk-nodejs-v4';
 
-// API密钥
-const ZHIPU_API_KEY = '336f0e6cb8eb4ed581c3461b7a2e5c85.E73mfNB2xr2kZWcu';
-
 export type ChatMessage = {
   id: string;
   role: 'user' | 'assistant' | 'system';
   content: string;
 };
 
-// 智谱AI客户端配置
-const getZhipuAIClient = () => {
-  try {
-    return new ZhipuAI({
-      apiKey: ZHIPU_API_KEY,
-    });
-  } catch (error) {
-    console.error('创建ZhipuAI客户端失败:', error);
-    throw error;
-  }
-};
+// 使用固定的API密钥
+const apiKey = '336f0e6cb8eb4ed581c3461b7a2e5c85.E73mfNB2xr2kZWcu';
 
 export async function POST(request: NextRequest) {
   try {
     const { messages } = await request.json();
     
-    console.log('使用API Key:', ZHIPU_API_KEY.substring(0, 10) + '...');
+    console.log('创建智谱AI客户端，API Key:', apiKey.substring(0, 10) + '...');
     
-    let ai;
-    try {
-      ai = getZhipuAIClient();
-    } catch (error) {
-      console.error('无法创建AI客户端:', error);
-      return NextResponse.json(
-        { error: 'AI服务配置错误' }, 
-        { status: 500 }
-      );
-    }
+    // 根据官方文档创建客户端
+    const ai = new ZhipuAI({
+      apiKey: apiKey
+    });
     
     // 转换消息格式以符合API要求
     const apiMessages = messages.map((msg: ChatMessage) => ({
@@ -45,35 +27,34 @@ export async function POST(request: NextRequest) {
       content: msg.content
     }));
 
+    console.log('发送请求到智谱AI API...');
+    console.log('消息数量:', apiMessages.length);
+
     // 创建流式聊天完成请求
-    let response;
-    try {
-      response = await ai.createCompletions({
-        model: 'glm-4',
-        messages: apiMessages,
-        stream: true,
-        temperature: 0.7,
-        top_p: 0.8,
-        max_tokens: 2048
-      });
-    } catch (error) {
-      console.error('调用AI服务失败:', error);
-      return NextResponse.json(
-        { error: 'AI服务调用失败' }, 
-        { status: 500 }
-      );
-    }
+    const stream = await ai.createCompletions({
+      model: 'glm-4',
+      messages: apiMessages,
+      stream: true,
+      temperature: 0.7,
+      top_p: 0.8,
+      max_tokens: 2048
+    });
+
+    console.log('成功获取流式响应');
 
     // 创建可读流
-    const stream = new ReadableStream({
+    const readableStream = new ReadableStream({
       async start(controller) {
         let fullContent = '';
         
         try {
-          // 处理流式响应 - 使用 SDK 的异步迭代器
-          for await (const chunk of response) {
+          // 根据官方文档处理流式响应
+          for await (const chunk of stream) {
             try {
-              // SDK 已经解析了 JSON，直接使用 chunk 对象
+              // 直接输出chunk来看看结构
+              console.log('收到chunk:', JSON.stringify(chunk, null, 2));
+              
+              // 检查chunk的结构并处理内容
               if (chunk.choices && chunk.choices[0] && chunk.choices[0].delta) {
                 const deltaContent = chunk.choices[0].delta.content;
                 if (deltaContent) {
@@ -87,23 +68,21 @@ export async function POST(request: NextRequest) {
               console.warn('处理流式数据时出错:', parseError);
             }
           }
-        } catch (error) {
-          console.error('调用智谱AI API时出错:', error);
           
-          // 解析并显示详细的错误信息
+          console.log('流式响应处理完成，总内容长度:', fullContent.length);
+        } catch (error) {
+          console.error('智谱AI API调用出错:', error);
+          
+          // 详细的错误信息
           let errorMessage = '抱歉，连接AI服务时出现错误，请稍后重试。';
           
           if (error && typeof error === 'object') {
             console.error('完整错误对象:', error);
             
-            // 尝试解析错误响应
             if ('response' in error && error.response) {
               console.error('API响应错误:', error.response);
               if (error.response.data) {
                 console.error('错误数据:', error.response.data);
-                if (error.response.data.error && error.response.data.error.message) {
-                  errorMessage = `API错误: ${error.response.data.error.message}`;
-                }
               }
             }
             
@@ -124,7 +103,7 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    return new NextResponse(stream, {
+    return new NextResponse(readableStream, {
       headers: {
         'Content-Type': 'text/plain; charset=utf-8',
         'Cache-Control': 'no-cache',
