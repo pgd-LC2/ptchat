@@ -9,11 +9,7 @@ export type ChatMessage = {
 
 // 智谱AI客户端配置
 const getZhipuAIClient = () => {
-  const apiKey = process.env.ZHIPUAI_API_KEY;
-  
-  if (!apiKey) {
-    throw new Error('ZHIPUAI_API_KEY 环境变量未设置，请在 .env.local 文件中配置');
-  }
+  const apiKey = 'b6d6fad0d07a4232acd5c8bb5b325218.dpsLqgmR0FLhBKAz';
 
   return new ZhipuAI({
     apiKey: apiKey,
@@ -26,18 +22,7 @@ export async function POST(request: NextRequest) {
   try {
     const { messages } = await request.json();
     
-    // 检查API密钥是否存在
-    const apiKey = process.env.ZHIPUAI_API_KEY;
-    if (!apiKey) {
-      console.error('ZHIPUAI_API_KEY 未设置');
-      return NextResponse.json(
-        { error: 'ZHIPUAI_API_KEY 未设置，请检查环境变量配置' }, 
-        { status: 500 }
-      );
-    }
-
-    console.log('API Key 长度:', apiKey.length);
-    console.log('API Key 前缀:', apiKey.substring(0, 10) + '...');
+    console.log('使用直接配置的API Key');
     
     const ai = getZhipuAIClient();
     
